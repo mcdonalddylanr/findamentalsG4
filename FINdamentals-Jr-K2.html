@@ -1,0 +1,1965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>FINdamentals Jr. — Money Skills for Kids!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --sky:#4EC9F0;--sky-d:#2BA8CC;--sky-light:#E8F8FE;
+  --sun:#FFD43B;--sun-d:#CCA800;--sun-light:#FFF9E0;
+  --green:#51C46A;--green-d:#3A9E52;--green-light:#E8F8ED;
+  --red:#FF6B6B;--red-light:#FFE8E8;
+  --purple:#9B72D0;--purple-d:#7A50AF;--purple-light:#F0E9FA;
+  --orange:#FF8C42;--orange-light:#FFF0E6;
+  --navy:#1A2E44;--text:#2D3A4A;--text2:#5A6A7A;--text3:#9AAABB;
+  --white:#FFFFFF;--bg:#F0F8FF;--border:#D0E8F0;
+  --radius:14px;--radius-lg:22px;--radius-xl:30px;
+  --sidebar-w:280px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden;}
+/* ── SCREENS ── */
+.screen{display:none;min-height:100vh;}
+.screen.active{display:flex;flex-direction:column;}
+@keyframes popIn{from{opacity:0;transform:scale(0.96) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes spin{from{transform:rotate(-20deg) scale(0.5)}to{transform:rotate(0) scale(1)}}
+@keyframes badgePop{0%{transform:scale(0.4)}70%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes drift{from{transform:translateX(-10px)}to{transform:translateX(10px)}}
+
+/* ════ WELCOME ════ */
+#screen-welcome{
+  background:linear-gradient(180deg,#B8EDFF 0%,#E0F7FF 55%,#F0FCFF 100%);
+  align-items:center;justify-content:center;text-align:center;
+  padding:32px 24px 48px;position:relative;overflow:hidden;
+}
+#screen-welcome::before{
+  content:'☁️  ☁️  ☁️';position:absolute;top:24px;left:0;right:0;
+  font-size:40px;letter-spacing:50px;opacity:.4;
+  animation:drift 8s ease-in-out infinite alternate;
+}
+.welcome-mascot{font-size:96px;display:block;margin-bottom:6px;animation:bounce 2s ease-in-out infinite;}
+.welcome-title{font-family:'Fredoka One',cursive;font-size:clamp(38px,10vw,68px);color:var(--navy);line-height:1;margin-bottom:4px;}
+.welcome-title span{color:var(--sky);}
+.welcome-subtitle{font-size:clamp(17px,4vw,22px);font-weight:700;color:var(--text2);margin-bottom:28px;}
+.welcome-stars{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:36px;}
+.w-badge{background:var(--white);border:2px solid var(--border);border-radius:18px;padding:9px 18px;font-size:15px;font-weight:800;color:var(--navy);box-shadow:0 3px 10px rgba(0,0,0,.07);}
+
+/* ── BIG BUTTONS ── */
+.btn-big{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:20px 48px;border-radius:var(--radius-xl);font-family:'Fredoka One',cursive;font-size:26px;cursor:pointer;border:none;transition:all .2s cubic-bezier(.34,1.56,.64,1);}
+.btn-big:hover{transform:scale(1.06) translateY(-3px);}
+.btn-big:active{transform:scale(0.97);}
+.btn-sky{background:var(--sky);color:var(--white);box-shadow:0 6px 0 var(--sky-d),0 10px 28px rgba(78,201,240,.35);}
+.btn-sky:hover{box-shadow:0 8px 0 var(--sky-d),0 14px 34px rgba(78,201,240,.45);}
+.btn-sun{background:var(--sun);color:var(--navy);box-shadow:0 6px 0 var(--sun-d),0 10px 28px rgba(255,212,59,.35);}
+.btn-green{background:var(--green);color:var(--white);box-shadow:0 6px 0 var(--green-d),0 10px 28px rgba(81,196,106,.35);}
+.btn-green:hover{box-shadow:0 8px 0 var(--green-d),0 14px 34px rgba(81,196,106,.45);}
+.btn-purple{background:var(--purple);color:var(--white);box-shadow:0 6px 0 var(--purple-d),0 10px 28px rgba(155,114,208,.35);}
+.btn-sm{padding:12px 24px;font-size:18px;border-radius:18px;}
+
+.continue-wrap{margin-top:18px;}
+.btn-continue{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:18px;background:var(--white);border:3px solid var(--sky);font-family:'Fredoka One',cursive;font-size:19px;color:var(--sky);cursor:pointer;transition:all .2s;}
+.btn-continue:hover{background:var(--sky-light);}
+.continue-info{font-size:13px;font-weight:700;color:var(--text3);margin-top:6px;}
+
+/* ════ APP LAYOUT ════ */
+#screen-app{display:none;flex-direction:row;min-height:100vh;}
+#screen-app.active{display:flex;}
+
+/* ── SIDEBAR OVERLAY (mobile) ── */
+#sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:199;}
+#sidebar-overlay.open{display:block;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  background:var(--navy);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;z-index:200;
+  transform:translateX(calc(-1 * var(--sidebar-w)));
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;
+}
+.sidebar.open{transform:translateX(0);}
+.sidebar-header{
+  padding:20px 18px 16px;
+  background:linear-gradient(135deg,#1e3a58,#142534);
+  border-bottom:2px solid rgba(78,201,240,.2);
+  position:sticky;top:0;z-index:1;
+}
+.sidebar-logo{font-family:'Fredoka One',cursive;font-size:22px;color:var(--white);display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.sidebar-logo span{color:var(--sky);}
+.sidebar-close{
+  position:absolute;top:16px;right:14px;
+  background:rgba(255,255,255,.1);border:none;border-radius:10px;
+  padding:6px 10px;font-size:18px;color:var(--white);cursor:pointer;
+  transition:background .2s;
+}
+.sidebar-close:hover{background:rgba(255,255,255,.2);}
+.sidebar-xp{margin-top:4px;}
+.sidebar-xp-label{font-size:11px;font-weight:800;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;display:flex;justify-content:space-between;}
+.sidebar-xp-label span:last-child{color:var(--sun);}
+.sidebar-xp-track{height:10px;background:rgba(255,255,255,.1);border-radius:5px;overflow:hidden;}
+.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--sky),#2BD4FF);border-radius:5px;transition:width .7s cubic-bezier(.34,1.56,.64,1);}
+
+.sidebar-section{padding:12px 12px 4px;font-size:10px;font-weight:900;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:2px;}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 16px;margin:2px 8px;
+  border-radius:12px;cursor:pointer;
+  font-size:14px;font-weight:800;color:rgba(255,255,255,.75);
+  transition:all .15s;border:none;background:none;width:calc(100% - 16px);text-align:left;
+}
+.nav-item:hover{background:rgba(78,201,240,.15);color:var(--white);}
+.nav-item.active{background:var(--sky);color:var(--white);}
+.nav-item.done{color:rgba(81,196,106,.9);}
+.nav-item.done.active{background:var(--green);color:var(--white);}
+.nav-icon{font-size:20px;flex-shrink:0;}
+.nav-check{margin-left:auto;font-size:16px;}
+
+.sidebar-badges{padding:14px;border-top:1px solid rgba(255,255,255,.08);margin-top:auto;}
+.sidebar-badges-label{font-size:10px;font-weight:900;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;}
+.sidebar-badge-row{display:flex;flex-wrap:wrap;gap:6px;}
+.sb-badge{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.1);}
+.sb-badge.earned{background:var(--sun-light);border-color:var(--sun);animation:badgePop .5s cubic-bezier(.34,1.56,.64,1);}
+.sb-badge.locked{opacity:.25;filter:grayscale(1);}
+
+/* ── MAIN CONTENT ── */
+.app-main{flex:1;display:flex;flex-direction:column;min-width:0;}
+
+/* TOPBAR */
+.topbar{
+  background:var(--white);border-bottom:3px solid var(--sky-light);
+  padding:10px 16px;display:flex;align-items:center;gap:12px;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 3px 14px rgba(78,201,240,.1);
+}
+.topbar-menu{
+  background:var(--sky-light);border:2px solid var(--sky);border-radius:12px;
+  padding:8px 12px;font-size:22px;cursor:pointer;
+  transition:all .2s;line-height:1;flex-shrink:0;
+}
+.topbar-menu:hover{background:var(--sky);color:var(--white);}
+.topbar-logo{font-family:'Fredoka One',cursive;font-size:22px;color:var(--navy);white-space:nowrap;}
+.topbar-logo span{color:var(--sky);}
+.topbar-xp{flex:1;max-width:260px;}
+.topbar-xp-label{display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:var(--text3);margin-bottom:3px;}
+.topbar-xp-label span:last-child{color:var(--sun);}
+.topbar-xp-track{height:12px;background:var(--sky-light);border-radius:6px;overflow:hidden;border:2px solid var(--border);}
+.topbar-xp-fill{height:100%;background:linear-gradient(90deg,var(--sky),#2BD4FF);border-radius:5px;transition:width .7s cubic-bezier(.34,1.56,.64,1);}
+.topbar-level{display:flex;align-items:center;gap:5px;background:var(--sun-light);border:2px solid var(--sun);border-radius:14px;padding:5px 12px;font-family:'Fredoka One',cursive;font-size:14px;color:var(--navy);white-space:nowrap;}
+.btn-home-top{background:var(--sky-light);border:2px solid var(--sky);border-radius:10px;padding:7px 14px;font-family:'Fredoka One',cursive;font-size:14px;color:var(--sky);cursor:pointer;transition:all .2s;white-space:nowrap;}
+.btn-home-top:hover{background:var(--sky);color:var(--white);}
+
+/* PAGE CONTENT */
+.page-wrap{flex:1;padding:20px 16px 48px;max-width:820px;margin:0 auto;width:100%;}
+.view{display:none;}
+.view.active{display:block;animation:slideIn .3s ease;}
+
+/* ════ DASHBOARD ════ */
+.dash-hero{text-align:center;margin-bottom:22px;padding:24px 20px;background:linear-gradient(135deg,#B8EDFF,#E0F7FF);border-radius:var(--radius-xl);border:3px solid var(--sky);position:relative;overflow:hidden;}
+.dash-hero::after{content:'⭐';position:absolute;top:-10px;right:18px;font-size:56px;opacity:.15;}
+.dash-hero h2{font-family:'Fredoka One',cursive;font-size:clamp(22px,6vw,36px);color:var(--navy);margin-bottom:5px;}
+.dash-hero p{font-size:15px;font-weight:700;color:var(--text2);}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;}
+.stat-card{background:var(--white);border-radius:var(--radius-lg);padding:16px 10px;text-align:center;border:3px solid var(--border);box-shadow:0 3px 0 var(--border);}
+.stat-val{font-family:'Fredoka One',cursive;font-size:36px;color:var(--navy);line-height:1;margin-bottom:3px;}
+.stat-label{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;}
+.section-title{font-family:'Fredoka One',cursive;font-size:24px;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+
+/* MODULE CARDS */
+.module-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+.mod-card{background:var(--white);border-radius:var(--radius-lg);padding:16px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .2s cubic-bezier(.34,1.56,.64,1);border:3px solid var(--border);box-shadow:0 4px 0 var(--border);}
+.mod-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 8px 0 var(--border),var(--shadow,0 4px 20px rgba(78,201,240,.15));}
+.mod-card:active{transform:translateY(0) scale(.99);}
+.mod-card.done{border-color:var(--green);box-shadow:0 4px 0 var(--green-d);background:linear-gradient(135deg,#F0FFF4,var(--white));}
+.mod-icon{width:56px;height:56px;flex-shrink:0;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:30px;background:var(--sky-light);border:2px solid var(--border);}
+.mod-card.done .mod-icon{background:var(--green-light);border-color:var(--green);}
+.mod-info{flex:1;min-width:0;}
+.mod-name{font-family:'Fredoka One',cursive;font-size:18px;color:var(--navy);margin-bottom:2px;}
+.mod-desc{font-size:12px;font-weight:700;color:var(--text2);}
+.mod-subs{font-size:11px;color:var(--text3);margin-top:2px;font-weight:700;}
+.mod-status{display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:70px;}
+.mod-pct{font-family:'Fredoka One',cursive;font-size:16px;color:var(--text3);}
+.mod-bar{width:70px;height:9px;background:var(--sky-light);border-radius:5px;overflow:hidden;border:2px solid var(--border);}
+.mod-bar-fill{height:100%;background:linear-gradient(90deg,var(--sky),#2BD4FF);border-radius:4px;transition:width .6s ease;}
+.mod-card.done .mod-bar-fill{background:linear-gradient(90deg,var(--green),#6EE48A);}
+
+/* BADGE SHELF */
+.badges-shelf{background:var(--white);border-radius:var(--radius-lg);padding:18px;border:3px solid var(--border);margin-bottom:20px;}
+.badges-title{font-family:'Fredoka One',cursive;font-size:20px;color:var(--navy);margin-bottom:12px;}
+.badges-grid{display:flex;gap:10px;flex-wrap:wrap;}
+.badge{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;border:3px solid var(--border);background:var(--bg);transition:all .3s cubic-bezier(.34,1.56,.64,1);}
+.badge.earned{border-color:var(--sun);background:var(--sun-light);box-shadow:0 0 0 3px rgba(255,212,59,.25),0 4px 10px rgba(255,212,59,.25);animation:badgePop .5s cubic-bezier(.34,1.56,.64,1);}
+.badge.locked{opacity:.3;filter:grayscale(1);}
+
+/* ════ MODULE VIEW ════ */
+.mod-header{text-align:center;margin-bottom:20px;padding:22px 18px;border-radius:var(--radius-xl);background:linear-gradient(135deg,var(--sky-light),var(--white));border:3px solid var(--sky);}
+.mod-big-icon{font-size:64px;display:block;margin-bottom:8px;animation:bounce 2s ease-in-out infinite;}
+.mod-title{font-family:'Fredoka One',cursive;font-size:clamp(26px,7vw,40px);color:var(--navy);margin-bottom:6px;}
+.mod-chips{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
+.chip{background:var(--white);border:2px solid var(--border);border-radius:18px;padding:5px 12px;font-size:13px;font-weight:800;color:var(--text2);}
+
+/* SUBSECTION TABS */
+.sub-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;background:var(--white);padding:10px;border-radius:var(--radius-lg);border:3px solid var(--border);}
+.sub-tab{flex:1;min-width:120px;padding:10px 12px;border-radius:12px;border:2px solid var(--border);background:var(--bg);font-family:'Fredoka One',cursive;font-size:14px;color:var(--text2);cursor:pointer;transition:all .2s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.sub-tab:hover{border-color:var(--sky);background:var(--sky-light);color:var(--navy);}
+.sub-tab.active{border-color:var(--sky);background:var(--sky);color:var(--white);}
+.sub-tab.done{border-color:var(--green);background:var(--green-light);color:var(--green-d);}
+.sub-tab.done.active{background:var(--green);color:var(--white);}
+.sub-tab-icon{font-size:24px;}
+.sub-tab-check{font-size:12px;}
+
+/* LESSON CARD */
+.lesson-card{background:var(--white);border-radius:var(--radius-lg);padding:22px;margin-bottom:16px;border:3px solid var(--border);box-shadow:0 4px 0 var(--border);}
+.lesson-card h3{font-family:'Fredoka One',cursive;font-size:clamp(19px,5vw,26px);color:var(--navy);margin-bottom:12px;}
+.lesson-body{font-size:16px;color:var(--text);line-height:1.85;margin-bottom:18px;font-weight:600;}
+.lesson-body strong{color:var(--navy);}
+
+/* CALLOUT */
+.callout{border-radius:var(--radius);padding:16px 18px;margin-bottom:18px;border:3px solid;font-weight:700;font-size:15px;line-height:1.65;}
+.callout-sky{background:var(--sky-light);border-color:var(--sky);color:var(--navy);}
+.callout-sun{background:var(--sun-light);border-color:var(--sun);color:var(--navy);}
+.callout-purple{background:var(--purple-light);border-color:var(--purple);color:var(--navy);}
+.callout-green{background:var(--green-light);border-color:var(--green);color:var(--navy);}
+.callout-purple{background:var(--purple-light);border-color:var(--purple);color:var(--navy);}
+.callout-label{font-family:'Fredoka One',cursive;font-size:13px;letter-spacing:1px;margin-bottom:5px;text-transform:uppercase;}
+
+/* CHOICES */
+.choices{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.choice{padding:16px 18px;border-radius:var(--radius);border:3px solid var(--border);background:var(--white);cursor:pointer;font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;color:var(--text);text-align:left;transition:all .2s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;gap:12px;min-height:60px;box-shadow:0 4px 0 var(--border);}
+.choice:hover{border-color:var(--sky);background:var(--sky-light);transform:translateY(-2px);}
+.choice:active{transform:translateY(0);}
+.choice.correct{border-color:var(--green);background:var(--green-light);color:var(--navy);pointer-events:none;box-shadow:0 4px 0 var(--green-d);}
+.choice.wrong{border-color:var(--red);background:var(--red-light);color:var(--red);pointer-events:none;}
+.choice.reveal{border-color:var(--green);background:var(--green-light);color:var(--navy);pointer-events:none;}
+.choice-emoji{font-size:24px;flex-shrink:0;}
+
+/* FEEDBACK */
+.feedback{border-radius:var(--radius);padding:16px 18px;margin-bottom:18px;display:none;font-size:15px;font-weight:700;line-height:1.65;animation:popIn .3s ease;border:3px solid;}
+.feedback.correct{background:var(--green-light);border-color:var(--green);color:var(--navy);}
+.feedback.wrong{background:var(--red-light);border-color:var(--red);color:var(--text);}
+.fb-title{font-family:'Fredoka One',cursive;font-size:20px;margin-bottom:5px;}
+.feedback.correct .fb-title{color:var(--green);}
+.feedback.wrong .fb-title{color:var(--red);}
+
+/* NEXT SUBSECTION BUTTON */
+.next-sub-wrap{text-align:center;padding:10px 0 4px;}
+
+/* MODULE COMPLETE */
+.module-complete{display:none;text-align:center;padding:36px 18px;animation:popIn .4s ease;}
+.complete-burst{font-size:72px;display:block;margin-bottom:10px;animation:spin .6s ease;}
+.complete-title{font-family:'Fredoka One',cursive;font-size:36px;color:var(--navy);margin-bottom:8px;}
+.complete-msg{font-size:17px;font-weight:700;color:var(--text2);margin-bottom:20px;line-height:1.65;}
+.xp-pop{display:inline-flex;align-items:center;gap:10px;background:var(--sun-light);border:3px solid var(--sun);border-radius:18px;padding:10px 26px;font-family:'Fredoka One',cursive;font-size:24px;color:var(--navy);margin-bottom:24px;animation:popIn .5s .2s both cubic-bezier(.34,1.56,.64,1);}
+.complete-confetti{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:20px;font-size:30px;animation:popIn .5s .1s both;}
+
+/* INTERACTIVE BITS */
+.sort-item{display:flex;align-items:center;gap:12px;background:var(--white);border:3px solid var(--border);border-radius:var(--radius);padding:12px 16px;margin-bottom:10px;box-shadow:0 3px 0 var(--border);}
+.sort-emoji{font-size:30px;flex-shrink:0;}
+.sort-label{flex:1;font-size:16px;font-weight:800;color:var(--navy);}
+.sort-btns{display:flex;gap:8px;}
+.sort-btn{padding:9px 14px;border-radius:10px;font-family:'Fredoka One',cursive;font-size:15px;cursor:pointer;border:2px solid;transition:all .15s;min-width:64px;text-align:center;}
+.sort-need{background:var(--green-light);color:var(--green-d);border-color:var(--green);}
+.sort-need:hover{background:var(--green);color:var(--white);}
+.sort-want{background:var(--sun-light);color:var(--navy);border-color:var(--sun);}
+.sort-want:hover{background:var(--sun);}
+.sort-btn.correct-pick{background:var(--green);color:var(--white);border-color:var(--green);}
+.sort-btn.wrong-pick{background:var(--red);color:var(--white);border-color:var(--red);}
+.sort-btn:disabled{opacity:.5;cursor:not-allowed;}
+
+/* MATCH GAME */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+.match-col-label{font-family:'Fredoka One',cursive;font-size:16px;color:var(--text3);margin-bottom:8px;text-align:center;}
+.match-card{padding:12px;border-radius:var(--radius);border:3px solid var(--border);background:var(--white);cursor:pointer;font-size:14px;font-weight:800;color:var(--navy);text-align:center;transition:all .2s;box-shadow:0 3px 0 var(--border);min-height:54px;display:flex;align-items:center;justify-content:center;gap:6px;flex-direction:column;}
+.match-card:hover{border-color:var(--sky);background:var(--sky-light);}
+.match-card.selected{border-color:var(--sky);background:var(--sky);color:var(--white);}
+.match-card.matched{border-color:var(--green);background:var(--green-light);color:var(--green-d);pointer-events:none;}
+.match-card.wrong-flash{border-color:var(--red);background:var(--red-light);animation:shake .3s ease;}
+.match-card-emoji{font-size:26px;}
+
+/* COIN GRID */
+.coin-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.coin-card{background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:12px;text-align:center;flex:1;min-width:90px;}
+.coin-emoji{font-size:34px;}
+.coin-name{font-family:'Fredoka One',cursive;font-size:14px;color:var(--navy);margin-top:5px;}
+.coin-val{font-family:'Fredoka One',cursive;font-size:18px;color:var(--sky);}
+
+/* PIGGY */
+.piggy-coins{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.piggy-coin{width:46px;height:46px;border-radius:50%;border:3px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:20px;opacity:.3;transition:all .4s cubic-bezier(.34,1.56,.64,1);}
+.piggy-coin.filled{opacity:1;background:var(--sun-light);border-color:var(--sun);transform:scale(1.1);}
+.piggy-track{height:16px;background:var(--sky-light);border-radius:8px;overflow:hidden;border:2px solid var(--border);margin-bottom:7px;}
+.piggy-fill{height:100%;background:linear-gradient(90deg,var(--sun),#FFE066);border-radius:7px;transition:width .5s ease;}
+.piggy-labels{display:flex;justify-content:space-between;font-size:14px;font-weight:800;}
+
+/* STORE */
+.store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:16px;}
+.store-item{background:var(--white);border:3px solid var(--border);border-radius:var(--radius);padding:14px 8px;text-align:center;cursor:pointer;transition:all .2s cubic-bezier(.34,1.56,.64,1);box-shadow:0 3px 0 var(--border);}
+.store-item:hover{border-color:var(--sky);background:var(--sky-light);transform:scale(1.04);}
+.store-item.picked{border-color:var(--sky);background:var(--sky-light);transform:scale(1.04);box-shadow:0 4px 0 var(--sky-d);}
+.store-item.cant{animation:shake .3s ease;}
+.store-emoji{font-size:36px;margin-bottom:5px;}
+.store-name{font-weight:800;font-size:12px;color:var(--navy);margin-bottom:3px;}
+.store-price{font-family:'Fredoka One',cursive;font-size:17px;color:var(--sky);}
+.money-display{background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:17px;font-weight:800;color:var(--navy);}
+.money-amount{font-family:'Fredoka One',cursive;font-size:30px;color:var(--sky);}
+
+/* INFO GRID */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:18px;}
+.info-card{background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:12px;text-align:center;}
+.info-card.sun{background:var(--sun-light);border-color:var(--sun);}
+.info-card.green{background:var(--green-light);border-color:var(--green);}
+.info-card.purple{background:var(--purple-light);border-color:var(--purple);}
+.info-emoji{font-size:34px;}
+.info-name{font-family:'Fredoka One',cursive;font-size:14px;color:var(--navy);margin-top:5px;}
+.info-val{font-size:12px;color:var(--text2);margin-top:2px;font-weight:700;}
+
+/* SCENARIO BOX */
+.scenario{background:linear-gradient(135deg,var(--purple-light),#f8f4ff);border:3px solid var(--purple);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px;}
+.scenario-title{font-family:'Fredoka One',cursive;font-size:18px;color:var(--purple-d);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.scenario-body{font-size:15px;font-weight:700;color:var(--text);line-height:1.75;}
+
+/* COMPARISON TABLE */
+.comp-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.comp-box{border-radius:var(--radius);padding:14px;border:3px solid;text-align:center;}
+.comp-box-sky{background:var(--sky-light);border-color:var(--sky);}
+.comp-box-sun{background:var(--sun-light);border-color:var(--sun);}
+.comp-box-green{background:var(--green-light);border-color:var(--green);}
+.comp-box-red{background:var(--red-light);border-color:var(--red);}
+.comp-label{font-family:'Fredoka One',cursive;font-size:15px;color:var(--navy);}
+.comp-desc{font-size:12px;color:var(--text2);margin-top:4px;font-weight:700;line-height:1.5;}
+
+/* GOAL TRACKER */
+.goal-visual{background:linear-gradient(135deg,var(--sun-light),#fff9ee);border:3px solid var(--sun);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px;text-align:center;}
+.goal-steps{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:12px;}
+.goal-step{width:42px;height:42px;border-radius:50%;border:3px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;transition:all .4s cubic-bezier(.34,1.56,.64,1);}
+.goal-step.filled{background:var(--sun-light);border-color:var(--sun);transform:scale(1.15);}
+.goal-arrow{font-size:20px;color:var(--text3);}
+
+/* SLIDER WIDGET */
+.slider-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;background:var(--sky-light);border:3px solid var(--border);border-radius:var(--radius);padding:12px;}
+.slider-label{font-size:15px;font-weight:800;color:var(--navy);min-width:100px;}
+input[type=range]{flex:1;min-width:100px;height:8px;accent-color:var(--sky);cursor:pointer;}
+.slider-val{font-family:'Fredoka One',cursive;font-size:18px;color:var(--sky);min-width:70px;text-align:right;}
+
+@media(max-width:600px){
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .sub-tabs{gap:6px;}
+  .sub-tab{min-width:90px;font-size:12px;}
+  .match-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ WELCOME SCREEN ══════════════ -->
+<div class="screen active" id="screen-welcome">
+  <span class="welcome-mascot">🦉</span>
+  <h1 class="welcome-title">FIN<span>damentals</span> Jr.!</h1>
+  <p class="welcome-subtitle">Learn about money — it's super fun! 🌟</p>
+  <div class="welcome-stars">
+    <div class="w-badge">🎮 Fun Games</div>
+    <div class="w-badge">🏆 Earn Badges</div>
+    <div class="w-badge">🌟 Collect Stars</div>
+    <div class="w-badge">💰 Learn Money!</div>
+  </div>
+  <button class="btn-big btn-sky" onclick="startApp()">Let's Go! 🚀</button>
+  <div class="continue-wrap" id="continue-wrap" style="display:none;">
+    <button class="btn-continue" onclick="startApp()">↩ Keep Going!</button>
+    <div class="continue-info" id="continue-info"></div>
+  </div>
+</div>
+
+<!-- ══════════════ APP SCREEN ══════════════ -->
+<div class="screen" id="screen-app">
+
+  <!-- SIDEBAR OVERLAY -->
+  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR NAV -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">🦉 FIN<span>damentals</span></div>
+      <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+      <div class="sidebar-xp">
+        <div class="sidebar-xp-label"><span>⭐ Stars</span><span id="sb-xp-lbl">0 / 240</span></div>
+        <div class="sidebar-xp-track"><div class="sidebar-xp-fill" id="sb-xp-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="sidebar-section">🏠 Home</div>
+    <button class="nav-item" onclick="navTo('dash')" id="nav-dash"><span class="nav-icon">🏠</span>Dashboard</button>
+    <div class="sidebar-section">📚 Lessons</div>
+    <button class="nav-item" onclick="navTo('what-is-money')" id="nav-what-is-money"><span class="nav-icon">🪙</span>What is Money?<span class="nav-check" id="chk-what-is-money"></span></button>
+    <button class="nav-item" onclick="navTo('k2-needs-wants')" id="nav-k2-needs-wants"><span class="nav-icon">🍎</span>Needs vs. Wants<span class="nav-check" id="chk-k2-needs-wants"></span></button>
+    <button class="nav-item" onclick="navTo('saving-up')" id="nav-saving-up"><span class="nav-icon">🐷</span>Saving Up<span class="nav-check" id="chk-saving-up"></span></button>
+    <button class="nav-item" onclick="navTo('k2-spending')" id="nav-k2-spending"><span class="nav-icon">🏪</span>Spending Choices<span class="nav-check" id="chk-k2-spending"></span></button>
+    <button class="nav-item" onclick="navTo('learn-to-earn')" id="nav-learn-to-earn"><span class="nav-icon">💪</span>Learn to Earn<span class="nav-check" id="chk-learn-to-earn"></span></button>
+    <button class="nav-item" onclick="navTo('k2-goal-setting')" id="nav-k2-goal-setting"><span class="nav-icon">🎯</span>Ready. Set. Goal!<span class="nav-check" id="chk-k2-goal-setting"></span></button>
+    <button class="nav-item" onclick="navTo('super-savers')" id="nav-super-savers"><span class="nav-icon">🦸</span>Super Savers<span class="nav-check" id="chk-super-savers"></span></button>
+    <button class="nav-item" onclick="navTo('k2-borrowing')" id="nav-k2-borrowing"><span class="nav-icon">🤲</span>Borrowing &amp; Lending<span class="nav-check" id="chk-k2-borrowing"></span></button>
+    <div class="sidebar-badges">
+      <div class="sidebar-badges-label">🏅 Your Badges</div>
+      <div class="sidebar-badge-row" id="sb-badges"></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="app-main">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="topbar-menu" onclick="openSidebar()" title="Menu">☰</button>
+      <div class="topbar-logo">🦉 FIN<span>damentals</span></div>
+      <div class="topbar-xp">
+        <div class="topbar-xp-label"><span>⭐ Stars</span><span id="top-xp-lbl">0 / 240</span></div>
+        <div class="topbar-xp-track"><div class="topbar-xp-fill" id="top-xp-fill" style="width:0%"></div></div>
+      </div>
+      <div class="topbar-level">⭐ <span id="top-level">Starter</span></div>
+      <button class="btn-home-top" onclick="navTo('dash')">🏠 Home</button>
+    </div>
+
+    <!-- VIEWS -->
+    <div class="page-wrap">
+
+      <!-- ════════ DASHBOARD ════════ -->
+      <div class="view active" id="view-dash">
+        <div class="dash-hero">
+          <h2 id="dash-greeting">Hey there, Money Explorer! 👋</h2>
+          <p id="dash-sub">Pick a lesson and start learning. You're going to be amazing! 🌟</p>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-val" id="stat-done">0</div><div class="stat-label">Done ✅</div></div>
+          <div class="stat-card"><div class="stat-val" id="stat-xp">0</div><div class="stat-label">Stars ⭐</div></div>
+          <div class="stat-card"><div class="stat-val" id="stat-badges">0</div><div class="stat-label">Badges 🏅</div></div>
+        </div>
+        <div class="section-title">📚 Your Lessons</div>
+        <div class="module-grid" id="module-grid"></div>
+        <div class="badges-shelf">
+          <div class="badges-title">🏅 Your Badges</div>
+          <div class="badges-grid" id="badges-grid"></div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════
+           MODULE: WHAT IS MONEY?
+           Subsections: Coins & Bills | Trading & Earning | Save Spend Give
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-what-is-money">
+        <div class="mod-header">
+          <span class="mod-big-icon">🪙</span>
+          <div class="mod-title">What is Money?</div>
+          <div class="mod-chips"><span class="chip">⏱ ~30 min</span><span class="chip">⭐ 30 Stars</span><span class="chip">3 Lessons</span></div>
+        </div>
+        <div class="sub-tabs" id="tabs-wim">
+          <div class="sub-tab active" onclick="goSub('wim',0)" id="stab-wim-0"><span class="sub-tab-icon">🪙</span>Coins &amp; Bills<span class="sub-tab-check" id="stchk-wim-0"></span></div>
+          <div class="sub-tab" onclick="goSub('wim',1)" id="stab-wim-1"><span class="sub-tab-icon">🤝</span>Trade &amp; Earn<span class="sub-tab-check" id="stchk-wim-1"></span></div>
+          <div class="sub-tab" onclick="goSub('wim',2)" id="stab-wim-2"><span class="sub-tab-icon">🏦</span>Save, Spend, Give<span class="sub-tab-check" id="stchk-wim-2"></span></div>
+        </div>
+
+        <!-- Subsection 0: Coins & Bills -->
+        <div id="sub-wim-0">
+          <div class="lesson-card">
+            <h3>Coins and Bills 🪙💵</h3>
+            <div class="lesson-body">Money comes in different shapes! <strong>Coins</strong> are metal and round. <strong>Bills</strong> (or dollar bills) are paper and rectangular. Each one is worth a different amount.</div>
+            <div class="coin-grid">
+              <div class="coin-card"><div class="coin-emoji">🟤</div><div class="coin-name">Penny</div><div class="coin-val">1¢</div></div>
+              <div class="coin-card"><div class="coin-emoji">⚪</div><div class="coin-name">Nickel</div><div class="coin-val">5¢</div></div>
+              <div class="coin-card"><div class="coin-emoji">🔘</div><div class="coin-name">Dime</div><div class="coin-val">10¢</div></div>
+              <div class="coin-card"><div class="coin-emoji">🟡</div><div class="coin-name">Quarter</div><div class="coin-val">25¢</div></div>
+              <div class="coin-card" style="background:var(--sun-light);border-color:var(--sun)"><div class="coin-emoji">💵</div><div class="coin-name">$1 Bill</div><div class="coin-val">100¢</div></div>
+              <div class="coin-card" style="background:var(--sun-light);border-color:var(--sun)"><div class="coin-emoji">💵</div><div class="coin-name">$5 Bill</div><div class="coin-val">500¢</div></div>
+            </div>
+            <div class="callout callout-sky">
+              <div class="callout-label">💡 Did You Know?</div>
+              A dime is smaller than a penny, but it's worth <strong>10 times more</strong>! Size doesn't tell you how much money is worth — only the number does.
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Quick Check — Coin Math!</div>
+              You have 2 dimes and 1 nickel. How much money is that?
+            </div>
+            <div class="choices" id="wim0-q1">
+              <button class="choice" onclick="pick(this,'wrong','wim0-fb1')"><span class="choice-emoji">💭</span>15 cents</button>
+              <button class="choice" onclick="pick(this,'correct','wim0-fb1')"><span class="choice-emoji">💭</span>25 cents</button>
+              <button class="choice" onclick="pick(this,'wrong','wim0-fb1')"><span class="choice-emoji">💭</span>30 cents</button>
+              <button class="choice" onclick="pick(this,'wrong','wim0-fb1')"><span class="choice-emoji">💭</span>21 cents</button>
+            </div>
+            <div class="feedback" id="wim0-fb1"></div>
+
+            <div class="scenario">
+              <div class="scenario-title">🌟 Real-Life Story: Sofia at the Snack Shop</div>
+              <div class="scenario-body">Sofia wants a granola bar that costs <strong>30¢</strong>. She has 1 quarter and 1 nickel in her pocket. Does she have enough?<br><br>A quarter is 25¢ + a nickel is 5¢ = 30¢. <strong>Yes!</strong> She has exactly the right amount! 🎉</div>
+            </div>
+
+            <div class="callout callout-green">
+              <div class="callout-label">🎯 Let's Try Another!</div>
+              Marcus wants to buy a sticker for 20¢. He has 3 nickels. Does he have enough?
+            </div>
+            <div class="choices" id="wim0-q2">
+              <button class="choice" onclick="pick(this,'wrong','wim0-fb2')"><span class="choice-emoji">✅</span>Yes — 3 nickels = 15¢, that's more than 20¢</button>
+              <button class="choice" onclick="pick(this,'correct','wim0-fb2')"><span class="choice-emoji">❌</span>No — 3 nickels = 15¢, which is less than 20¢</button>
+            </div>
+            <div class="feedback" id="wim0-fb2"></div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('wim',0);goSub('wim',1)">Next Lesson → 🤝</button>
+          </div>
+        </div>
+
+        <!-- Subsection 1: Trading & Earning -->
+        <div id="sub-wim-1" style="display:none;">
+          <div class="lesson-card">
+            <h3>How Long Has Money Been Around? 🏺</h3>
+            <div class="lesson-body">
+              Money has been around for a <strong>very, very long time</strong> — thousands of years! But it didn't always look like coins and bills. Money has changed a LOT over time.
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
+              <div style="background:var(--sun-light);border:3px solid var(--sun);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:14px;">
+                <span style="font-size:36px;flex-shrink:0;">🐚</span>
+                <div><div style="font-family:'Fredoka One',cursive;font-size:17px;color:var(--navy);">Long Ago: Shells &amp; Stones</div><div style="font-size:13px;color:var(--text2);font-weight:700;line-height:1.6;">People used pretty shells, beads, and special stones as money. Everyone in the community agreed they had value — just like we agree a quarter is worth 25¢!</div></div>
+              </div>
+              <div style="background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:14px;">
+                <span style="font-size:36px;flex-shrink:0;">🪙</span>
+                <div><div style="font-family:'Fredoka One',cursive;font-size:17px;color:var(--navy);">Later: Metal Coins</div><div style="font-size:13px;color:var(--text2);font-weight:700;line-height:1.6;">Around 2,700 years ago, people in a place called Lydia (now Turkey) made the first metal coins. These were made of gold and silver. Coins spread all over the world!</div></div>
+              </div>
+              <div style="background:var(--green-light);border:3px solid var(--green);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:14px;">
+                <span style="font-size:36px;flex-shrink:0;">📜</span>
+                <div><div style="font-family:'Fredoka One',cursive;font-size:17px;color:var(--navy);">Then: Paper Money</div><div style="font-size:13px;color:var(--text2);font-weight:700;line-height:1.6;">China invented paper money about 1,000 years ago. It was much easier to carry than heavy coins! The United States started using paper dollar bills in the 1860s.</div></div>
+              </div>
+              <div style="background:var(--purple-light);border:3px solid var(--purple);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:14px;">
+                <span style="font-size:36px;flex-shrink:0;">💳</span>
+                <div><div style="font-family:'Fredoka One',cursive;font-size:17px;color:var(--navy);">Today: Cards &amp; Apps!</div><div style="font-size:13px;color:var(--text2);font-weight:700;line-height:1.6;">Now people also pay with debit cards, credit cards, and phone apps like Apple Pay. You don't even need to hand over coins or bills — it's all digital! The money moves between banks.</div></div>
+              </div>
+            </div>
+            <div class="callout callout-sky">
+              <div class="callout-label">🎯 Quick Check — Money Through Time!</div>
+              Which of these came FIRST in the history of money?
+            </div>
+            <div class="choices" id="wim1-hist-q1">
+              <button class="choice" onclick="pick(this,'wrong','wim1-hist-fb1')"><span class="choice-emoji">💳</span>Credit cards and phone apps</button>
+              <button class="choice" onclick="pick(this,'correct','wim1-hist-fb1')"><span class="choice-emoji">🐚</span>Shells and stones used as money</button>
+              <button class="choice" onclick="pick(this,'wrong','wim1-hist-fb1')"><span class="choice-emoji">📜</span>Paper dollar bills</button>
+            </div>
+            <div class="feedback" id="wim1-hist-fb1"></div>
+          </div>
+
+          <div class="lesson-card">
+            <h3>Money Looks Different Around the World! 🌍</h3>
+            <div class="lesson-body">
+              Every country has its own kind of money, called <strong>currency</strong>. Just like people speak different languages, different countries use different money!<br><br>
+              When you travel to another country, you usually have to <strong>exchange</strong> your money — trade it in for their currency.
+            </div>
+            <div class="info-grid">
+              <div class="info-card"><div class="info-emoji">🇺🇸</div><div class="info-name">USA</div><div class="info-val">Dollar ($)</div></div>
+              <div class="info-card sun"><div class="info-emoji">🇬🇧</div><div class="info-name">UK</div><div class="info-val">Pound (£)</div></div>
+              <div class="info-card green"><div class="info-emoji">🇯🇵</div><div class="info-name">Japan</div><div class="info-val">Yen (¥)</div></div>
+              <div class="info-card purple"><div class="info-emoji">🇲🇽</div><div class="info-name">Mexico</div><div class="info-val">Peso</div></div>
+              <div class="info-card"><div class="info-emoji">🇧🇷</div><div class="info-name">Brazil</div><div class="info-val">Real</div></div>
+              <div class="info-card sun"><div class="info-emoji">🇮🇳</div><div class="info-name">India</div><div class="info-val">Rupee</div></div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">💡 Fun Fact!</div>
+              If you went on a trip to Japan, you couldn't use your American dollars at the store — you'd need to exchange them for yen first! Different countries, different money.
+            </div>
+            <div class="callout callout-sky">
+              <div class="callout-label">📍 Where Can You Use Money?</div>
+              You can use money in <strong>stores</strong>, at the <strong>grocery store</strong>, online, at <strong>restaurants</strong>, at school (lunch!), at the <strong>library</strong> for fines, at the <strong>doctor</strong>, and many more places. Wherever you buy or pay for something — you use money!
+            </div>
+          </div>
+
+          <div class="lesson-card">
+            <h3>Before Money — People Traded! 🔄</h3>
+            <div class="lesson-body">
+              Long, long ago, there were no coins or bills. If you wanted bread, you might trade some apples for it. This is called <strong>bartering</strong>. But bartering had problems — what if the baker didn't want apples? 🍎🍞<br><br>
+              People invented money to solve this! <strong>Money</strong> is something everyone agrees has value, so you can buy anything with it — not just what the seller wants to trade.
+            </div>
+            <div class="callout callout-sky">
+              <div class="callout-label">💡 Think About This!</div>
+              If you had a sandwich and wanted crayons, but the person with crayons only wanted a ball — what would you need to find first to make the trade work?
+            </div>
+            <div class="lesson-body" style="margin-bottom:0;">It's much easier with money — you just pay! 💰</div>
+          </div>
+          <div class="lesson-card">
+            <h3>How Do People Get Money? 💼</h3>
+            <div class="lesson-body">The most common way to get money is by <strong>working</strong>. When you do a job for someone, they pay you. This is called <strong>earning</strong> money.</div>
+            <div class="info-grid">
+              <div class="info-card"><div class="info-emoji">👩‍⚕️</div><div class="info-name">Doctor</div><div class="info-val">Helps sick people</div></div>
+              <div class="info-card sun"><div class="info-emoji">👨‍🏫</div><div class="info-name">Teacher</div><div class="info-val">Teaches students</div></div>
+              <div class="info-card green"><div class="info-emoji">🧹</div><div class="info-name">You!</div><div class="info-val">Do chores at home</div></div>
+              <div class="info-card purple"><div class="info-emoji">🍋</div><div class="info-name">Lemonade Stand</div><div class="info-val">Sell something!</div></div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Quick Check</div>
+              Lila helps her grandma wash dishes after dinner every day for a week. Her grandma gives her $2. Where did the $2 come from?
+            </div>
+            <div class="choices" id="wim1-q1">
+              <button class="choice" onclick="pick(this,'wrong','wim1-fb1')"><span class="choice-emoji">🎁</span>Grandma found it on the street</button>
+              <button class="choice" onclick="pick(this,'correct','wim1-fb1')"><span class="choice-emoji">💪</span>Lila earned it by doing a job (washing dishes!)</button>
+              <button class="choice" onclick="pick(this,'wrong','wim1-fb1')"><span class="choice-emoji">🤷</span>It appeared by magic</button>
+            </div>
+            <div class="feedback" id="wim1-fb1"></div>
+
+            <div class="scenario">
+              <div class="scenario-title">🌟 Real-Life Story: Carlos's Lemonade Stand</div>
+              <div class="scenario-body">Carlos set up a lemonade stand on Saturday. He sold 6 cups for 25¢ each. How much did he earn?<br><br>6 × 25¢ = <strong>$1.50</strong>! Carlos worked hard and earned money — just like a grown-up at a job! 🍋💰</div>
+            </div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('wim',1);goSub('wim',2)">Next Lesson → 🏦</button>
+          </div>
+        </div>
+
+        <!-- Subsection 2: Save, Spend, Give -->
+        <div id="sub-wim-2" style="display:none;">
+          <div class="lesson-card">
+            <h3>3 Things to Do With Money 💰</h3>
+            <div class="lesson-body">Once you earn money, you can decide what to do with it. There are 3 main choices!</div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;">
+              <div style="flex:1;min-width:120px;background:var(--green-light);border:3px solid var(--green);border-radius:var(--radius);padding:16px;text-align:center;">
+                <div style="font-size:36px;">🐷</div><div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--green);margin-top:6px;">SAVE IT</div>
+                <div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:700;">Keep it for something bigger later</div>
+              </div>
+              <div style="flex:1;min-width:120px;background:var(--sun-light);border:3px solid var(--sun);border-radius:var(--radius);padding:16px;text-align:center;">
+                <div style="font-size:36px;">🛒</div><div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--navy);margin-top:6px;">SPEND IT</div>
+                <div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:700;">Buy something you need or want</div>
+              </div>
+              <div style="flex:1;min-width:120px;background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:16px;text-align:center;">
+                <div style="font-size:36px;">🎁</div><div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--sky);margin-top:6px;">GIVE IT</div>
+                <div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:700;">Share with people who need it</div>
+              </div>
+            </div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Real-Life Story: Maya Gets $6</div>
+              <div class="scenario-body">Maya gets $6 for her birthday. She thinks: "I'll save $3 in my piggy bank for a book, spend $2 on a fun toy, and put $1 in the donation jar at school." <br><br>Maya used all three choices — save, spend, AND give! That's smart money thinking. 💡</div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Quick Check</div>
+              Jaylen gets $5 from walking the neighbor's dog. He wants a $12 toy. What's his smartest move right now?
+            </div>
+            <div class="choices" id="wim2-q1">
+              <button class="choice" onclick="pick(this,'wrong','wim2-fb1')"><span class="choice-emoji">🍭</span>Spend all $5 on candy right now!</button>
+              <button class="choice" onclick="pick(this,'correct','wim2-fb1')"><span class="choice-emoji">🐷</span>Save the $5 and keep earning to reach $12!</button>
+              <button class="choice" onclick="pick(this,'wrong','wim2-fb1')"><span class="choice-emoji">😴</span>Do nothing — money isn't important</button>
+            </div>
+            <div class="feedback" id="wim2-fb1"></div>
+          </div>
+          <div style="text-align:center;margin-bottom:20px;">
+            <button class="btn-big btn-green" onclick="markSub('wim',2);completeModule('what-is-money')">I learned it all! ✅</button>
+          </div>
+        </div>
+
+        <div class="module-complete" id="complete-what-is-money">
+          <div class="complete-confetti">🎉 🌟 🎉 🌟 🎉</div>
+          <span class="complete-burst">🪙</span>
+          <div class="complete-title">Money Expert!</div>
+          <div class="complete-msg">You know about coins, bills, how people earn money, and the 3 things to do with it. That's how everything starts!</div>
+          <div class="xp-pop">⭐ +30 Stars!</div>
+          <button class="btn-big btn-sky" onclick="navTo('k2-needs-wants')">Next: Needs vs. Wants →</button>
+        </div>
+      </div><!-- end what-is-money -->
+
+      <!-- ════════════════════════════════════════
+           MODULE: NEEDS VS WANTS
+           Subsections: Learn the Difference | Sorting Game | Real-Life Choices
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-k2-needs-wants">
+        <div class="mod-header" style="background:linear-gradient(135deg,var(--orange-light),var(--white));border-color:var(--orange);">
+          <span class="mod-big-icon">🍎</span>
+          <div class="mod-title">Needs vs. Wants</div>
+          <div class="mod-chips"><span class="chip">⏱ ~30 min</span><span class="chip">⭐ 30 Stars</span><span class="chip">3 Lessons</span></div>
+        </div>
+        <div class="sub-tabs" id="tabs-nw">
+          <div class="sub-tab active" onclick="goSub('nw',0)" id="stab-nw-0"><span class="sub-tab-icon">📖</span>Learn It<span class="sub-tab-check" id="stchk-nw-0"></span></div>
+          <div class="sub-tab" onclick="goSub('nw',1)" id="stab-nw-1"><span class="sub-tab-icon">🎮</span>Sort It!<span class="sub-tab-check" id="stchk-nw-1"></span></div>
+          <div class="sub-tab" onclick="goSub('nw',2)" id="stab-nw-2"><span class="sub-tab-icon">🌎</span>Real Life<span class="sub-tab-check" id="stchk-nw-2"></span></div>
+        </div>
+
+        <!-- Sub 0: Learn -->
+        <div id="sub-nw-0">
+          <div class="lesson-card">
+            <h3>What's the Difference? ✅⭐</h3>
+            <div class="lesson-body">
+              A <strong>need</strong> is something you <em>must</em> have to stay safe and healthy. Without needs, life would be really hard!<br><br>
+              A <strong>want</strong> is something that makes life more fun — but you could get by without it.
+            </div>
+            <div class="comp-row">
+              <div class="comp-box comp-box-green"><div class="comp-label">✅ NEEDS</div><div class="comp-desc">🍎 Food to eat<br>🏠 A home to live in<br>👕 Clothes to wear<br>💊 Medicine when sick<br>🚰 Clean water</div></div>
+              <div class="comp-box comp-box-sun"><div class="comp-label">⭐ WANTS</div><div class="comp-desc">🎮 Video games<br>🍭 Candy & treats<br>🧸 Toys & stuffed animals<br>🎬 Streaming movies<br>👟 New sneakers (when you have shoes!)</div></div>
+            </div>
+            <div class="callout callout-sky">
+              <div class="callout-label">💡 Tricky Ones!</div>
+              What about <strong>shoes</strong>? You NEED shoes to protect your feet — that's a need. But do you need the newest, most expensive sneakers? That part is a want! Things can sometimes be both.
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Quick Check</div>
+              A family has only $10 left for the week. Which should they buy first?
+            </div>
+            <div class="choices" id="nw0-q1">
+              <button class="choice" onclick="pick(this,'wrong','nw0-fb1')"><span class="choice-emoji">🎮</span>A new video game for $10</button>
+              <button class="choice" onclick="pick(this,'correct','nw0-fb1')"><span class="choice-emoji">🍎</span>Food for the family for $10</button>
+            </div>
+            <div class="feedback" id="nw0-fb1"></div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('nw',0);goSub('nw',1)">Play the Sorting Game → 🎮</button>
+          </div>
+        </div>
+
+        <!-- Sub 1: Sort It -->
+        <div id="sub-nw-1" style="display:none;">
+          <div class="lesson-card">
+            <h3>Sort These! Need or Want? 🎯</h3>
+            <div class="lesson-body">Tap <strong>Need</strong> or <strong>Want</strong> for each one. Think carefully!</div>
+            <div id="k2nw-sorter"></div>
+            <div class="feedback" id="k2nw-fb"></div>
+            <div style="text-align:center;display:none;" id="k2nw-done-btn">
+              <button class="btn-big btn-sky btn-sm" onclick="markSub('nw',1);goSub('nw',2)">See Real-Life Stories → 🌎</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub 2: Real Life -->
+        <div id="sub-nw-2" style="display:none;">
+          <div class="lesson-card">
+            <h3>Real-Life Money Choices 🌎</h3>
+            <div class="lesson-body">Knowing the difference between needs and wants helps us make <strong>smart spending choices</strong>. Needs should almost always come first!</div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Story: Amara's Allowance</div>
+              <div class="scenario-body">Amara gets $4 a week. She needs a new pencil for school (50¢) and really wants a sparkly eraser ($2) and a candy bar (75¢).<br><br>Amara buys the <strong>pencil first</strong> (need ✅). Then she still has $3.50, so she gets the eraser and candy too — and saves the rest! Good thinking, Amara! 🌟</div>
+            </div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Story: Deon's Dilemma</div>
+              <div class="scenario-body">Deon has $3. His backpack zipper broke (he needs a new one for $2) and his friends are getting ice cream ($2). He can't afford both.<br><br>The backpack is a <strong>need</strong> — he needs it for school every day. Ice cream is a <strong>want</strong>. Deon buys the backpack and skips the ice cream. That's tough, but it's the right call! 💪</div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Final Challenge!</div>
+              Emma has $5. She needs soap ($1) and wants a new book ($4). What should she do?
+            </div>
+            <div class="choices" id="nw2-q1">
+              <button class="choice" onclick="pick(this,'correct','nw2-fb1')"><span class="choice-emoji">✅</span>Buy the soap ($1) AND the book ($4) — she has exactly $5!</button>
+              <button class="choice" onclick="pick(this,'wrong','nw2-fb1')"><span class="choice-emoji">📚</span>Just buy the book — it's more fun</button>
+              <button class="choice" onclick="pick(this,'wrong','nw2-fb1')"><span class="choice-emoji">🤷</span>Don't buy anything and save it all</button>
+            </div>
+            <div class="feedback" id="nw2-fb1"></div>
+          </div>
+          <div style="text-align:center;margin-bottom:20px;">
+            <button class="btn-big btn-green" onclick="markSub('nw',2);completeModule('k2-needs-wants')">I learned it all! ✅</button>
+          </div>
+        </div>
+
+        <div class="module-complete" id="complete-k2-needs-wants">
+          <div class="complete-confetti">🍎 ⭐ 🍎 ⭐ 🍎</div>
+          <span class="complete-burst">🍎</span>
+          <div class="complete-title">Smart Sorter!</div>
+          <div class="complete-msg">You can spot the difference between needs and wants — and you know needs come first. Super important life skill! 🌟</div>
+          <div class="xp-pop">⭐ +30 Stars!</div>
+          <button class="btn-big btn-sky" onclick="navTo('saving-up')">Next: Saving Up →</button>
+        </div>
+      </div><!-- end k2-needs-wants -->
+
+      <!-- ════════════════════════════════════════
+           MODULE: SAVING UP
+           Subsections: Why Save? | Saving Math | Staying Strong
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-saving-up">
+        <div class="mod-header" style="background:linear-gradient(135deg,var(--sun-light),var(--white));border-color:var(--sun);">
+          <span class="mod-big-icon">🐷</span>
+          <div class="mod-title">Saving Up</div>
+          <div class="mod-chips"><span class="chip">⏱ ~30 min</span><span class="chip">⭐ 30 Stars</span><span class="chip">3 Lessons</span></div>
+        </div>
+        <div class="sub-tabs" id="tabs-su">
+          <div class="sub-tab active" onclick="goSub('su',0)" id="stab-su-0"><span class="sub-tab-icon">💡</span>Why Save?<span class="sub-tab-check" id="stchk-su-0"></span></div>
+          <div class="sub-tab" onclick="goSub('su',1)" id="stab-su-1"><span class="sub-tab-icon">🧮</span>Saving Math<span class="sub-tab-check" id="stchk-su-1"></span></div>
+          <div class="sub-tab" onclick="goSub('su',2)" id="stab-su-2"><span class="sub-tab-icon">💪</span>Stay Strong!<span class="sub-tab-check" id="stchk-su-2"></span></div>
+        </div>
+
+        <!-- Sub 0 -->
+        <div id="sub-su-0">
+          <div class="lesson-card">
+            <h3>Why Save Instead of Spending? 🤔</h3>
+            <div class="lesson-body">Spending money right away can feel great — but sometimes the thing you <em>really</em> want costs more than you have. That's when <strong>saving up</strong> is the answer!<br><br>Saving means putting money away bit by bit until you have enough. Like building a tower — one block at a time! 🏗️</div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Jamie's Bear</div>
+              <div class="scenario-body">Jamie really wants a stuffed bear that costs <strong>$10</strong>. Right now Jamie has <strong>$0</strong>. But every week Jamie helps with chores and gets <strong>$2</strong>. Jamie decides to save every penny — no snacks, no stickers — until the goal is reached!</div>
+            </div>
+            <div style="margin:16px 0;">
+              <div style="font-weight:800;font-size:14px;color:var(--navy);margin-bottom:8px;">Watch Jamie's piggy bank fill up! 🐷</div>
+              <div class="piggy-coins" id="piggy-coins"></div>
+              <div class="piggy-track"><div class="piggy-fill" id="piggy-bar" style="width:0%"></div></div>
+              <div class="piggy-labels"><span id="piggy-saved" style="color:var(--sun);font-family:'Fredoka One',cursive;font-size:17px;">$0 saved</span><span style="color:var(--text3);font-weight:800;">Goal: $10 🧸</span></div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 How Long Will It Take?</div>
+              Jamie saves $2 each week. The bear costs $10. How many weeks until Jamie can buy the bear?
+            </div>
+            <div class="choices" id="su0-q1">
+              <button class="choice" onclick="pick(this,'wrong','su0-fb1')"><span class="choice-emoji">💭</span>2 weeks</button>
+              <button class="choice" onclick="pick(this,'wrong','su0-fb1')"><span class="choice-emoji">💭</span>3 weeks</button>
+              <button class="choice" onclick="pick(this,'correct','su0-fb1',true)"><span class="choice-emoji">💭</span>5 weeks</button>
+              <button class="choice" onclick="pick(this,'wrong','su0-fb1')"><span class="choice-emoji">💭</span>10 weeks</button>
+            </div>
+            <div class="feedback" id="su0-fb1"></div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('su',0);goSub('su',1)">Next: Saving Math → 🧮</button>
+          </div>
+        </div>
+
+        <!-- Sub 1: Saving Math -->
+        <div id="sub-su-1" style="display:none;">
+          <div class="lesson-card">
+            <h3>Let's Do Some Saving Math! 🧮</h3>
+            <div class="lesson-body">To figure out how long to save, just divide! <br><strong>Cost ÷ Amount you save each week = Weeks needed</strong></div>
+            <div class="callout callout-sky">
+              <div class="callout-label">📍 Example 1</div>
+              Goal: <strong>$8 book</strong>. You save: <strong>$2/week</strong>.<br>$8 ÷ $2 = <strong>4 weeks</strong>! 📚
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">📍 Example 2</div>
+              Goal: <strong>$15 game</strong>. You save: <strong>$3/week</strong>.<br>$15 ÷ $3 = <strong>5 weeks</strong>! 🎮
+            </div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Your Turn: Keisha's Kite</div>
+              <div class="scenario-body">Keisha wants a kite that costs <strong>$12</strong>. She earns <strong>$3</strong> every week helping her neighbor water plants. How many weeks does Keisha need to save?</div>
+            </div>
+            <div class="choices" id="su1-q1">
+              <button class="choice" onclick="pick(this,'wrong','su1-fb1')"><span class="choice-emoji">💭</span>3 weeks</button>
+              <button class="choice" onclick="pick(this,'correct','su1-fb1')"><span class="choice-emoji">💭</span>4 weeks</button>
+              <button class="choice" onclick="pick(this,'wrong','su1-fb1')"><span class="choice-emoji">💭</span>12 weeks</button>
+              <button class="choice" onclick="pick(this,'wrong','su1-fb1')"><span class="choice-emoji">💭</span>6 weeks</button>
+            </div>
+            <div class="feedback" id="su1-fb1"></div>
+
+            <div class="scenario">
+              <div class="scenario-title">🌟 Hard One! Rafael's Remote Car</div>
+              <div class="scenario-body">Rafael wants a remote-control car that costs <strong>$20</strong>. He can save <strong>$4</strong> a week. How many weeks?</div>
+            </div>
+            <div class="choices" id="su1-q2">
+              <button class="choice" onclick="pick(this,'wrong','su1-fb2')"><span class="choice-emoji">💭</span>4 weeks</button>
+              <button class="choice" onclick="pick(this,'correct','su1-fb2')"><span class="choice-emoji">💭</span>5 weeks</button>
+              <button class="choice" onclick="pick(this,'wrong','su1-fb2')"><span class="choice-emoji">💭</span>20 weeks</button>
+            </div>
+            <div class="feedback" id="su1-fb2"></div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('su',1);goSub('su',2)">Next: Stay Strong! → 💪</button>
+          </div>
+        </div>
+
+        <!-- Sub 2: Stay Strong -->
+        <div id="sub-su-2" style="display:none;">
+          <div class="lesson-card">
+            <h3>The Hardest Part: Not Spending It! 🔒</h3>
+            <div class="lesson-body">The math part is easy. The HARD part is saying "no" to little things so you can say "YES" to the big thing you're saving for. This is called <strong>self-control</strong>. 💪</div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Test: Jamie Has Saved $6</div>
+              <div class="scenario-body">Jamie has saved <strong>$6</strong> toward the $10 bear. A friend says, "Trade me your $6 for these cool stickers worth $1!" Should Jamie trade?</div>
+            </div>
+            <div class="choices" id="su2-q1">
+              <button class="choice" onclick="pick(this,'wrong','su2-fb1')"><span class="choice-emoji">🔄</span>Yes — stickers are really cool!</button>
+              <button class="choice" onclick="pick(this,'correct','su2-fb1')"><span class="choice-emoji">🐷</span>No — the trade loses $5 of value AND wrecks the goal!</button>
+            </div>
+            <div class="feedback" id="su2-fb1"></div>
+
+            <div class="lesson-card" style="margin-top:14px;">
+              <h3>Tips to Stay Strong! 🌟</h3>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="background:var(--green-light);border-left:4px solid var(--green);border-radius:var(--radius);padding:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">✅</span><div><strong>Keep saving money separate</strong> — a different jar or piggy bank just for the goal</div></div>
+                <div style="background:var(--green-light);border-left:4px solid var(--green);border-radius:var(--radius);padding:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">✅</span><div><strong>Draw a chart</strong> — color in a box each time you save more</div></div>
+                <div style="background:var(--green-light);border-left:4px solid var(--green);border-radius:var(--radius);padding:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">✅</span><div><strong>Remind yourself why</strong> — picture how awesome it'll feel to reach your goal!</div></div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-bottom:20px;">
+            <button class="btn-big btn-green" onclick="markSub('su',2);completeModule('saving-up')">I learned it all! ✅</button>
+          </div>
+        </div>
+
+        <div class="module-complete" id="complete-saving-up">
+          <div class="complete-confetti">🐷 ⭐ 🐷 ⭐ 🐷</div>
+          <span class="complete-burst">🐷</span>
+          <div class="complete-title">Super Saver!</div>
+          <div class="complete-msg">You know why saving works, how to do the math, and how to stay strong. Jamie got the bear — and so can you! 🧸</div>
+          <div class="xp-pop">⭐ +30 Stars!</div>
+          <button class="btn-big btn-sky" onclick="navTo('k2-spending')">Next: Spending Choices →</button>
+        </div>
+      </div><!-- end saving-up -->
+
+      <!-- ════════════════════════════════════════
+           MODULE: SPENDING CHOICES
+           Subsections: Trade-Offs | The Store Game | Smart Spending Tips
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-k2-spending">
+        <div class="mod-header" style="background:linear-gradient(135deg,var(--purple-light),var(--white));border-color:var(--purple);">
+          <span class="mod-big-icon">🏪</span>
+          <div class="mod-title">Spending Choices</div>
+          <div class="mod-chips"><span class="chip">⏱ ~30 min</span><span class="chip">⭐ 30 Stars</span><span class="chip">3 Lessons</span></div>
+        </div>
+        <div class="sub-tabs" id="tabs-sp">
+          <div class="sub-tab active" onclick="goSub('sp',0)" id="stab-sp-0"><span class="sub-tab-icon">🔄</span>Trade-Offs<span class="sub-tab-check" id="stchk-sp-0"></span></div>
+          <div class="sub-tab" onclick="goSub('sp',1)" id="stab-sp-1"><span class="sub-tab-icon">🏪</span>Store Game!<span class="sub-tab-check" id="stchk-sp-1"></span></div>
+          <div class="sub-tab" onclick="goSub('sp',2)" id="stab-sp-2"><span class="sub-tab-icon">💡</span>Smart Tips<span class="sub-tab-check" id="stchk-sp-2"></span></div>
+        </div>
+
+        <!-- Sub 0 -->
+        <div id="sub-sp-0">
+          <div class="lesson-card">
+            <h3>What IS Spending? 💸</h3>
+            <div class="lesson-body">
+              <strong>Spending</strong> means using money to buy something. Every time you pay for something — a snack, a toy, a bus ride — you are spending money.<br><br>
+              When you spend money, it leaves your hands and goes to the person or store selling what you bought. That means it's gone — you can't use it again!
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+              <div style="background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:14px;text-align:center;">
+                <div style="font-size:32px;">🛒</div>
+                <div style="font-family:'Fredoka One',cursive;font-size:16px;color:var(--navy);margin-top:6px;">Spending Examples</div>
+                <div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:700;line-height:1.8;">Buying lunch at school<br>Getting a book at the store<br>Paying for a movie ticket<br>Buying a birthday present</div>
+              </div>
+              <div style="background:var(--red-light);border:3px solid var(--red);border-radius:var(--radius);padding:14px;text-align:center;">
+                <div style="font-size:32px;">⚠️</div>
+                <div style="font-family:'Fredoka One',cursive;font-size:16px;color:var(--navy);margin-top:6px;">Remember!</div>
+                <div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:700;line-height:1.8;">Once you spend money, it's gone. You can't "unspend" it — so think before you buy!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lesson-card">
+            <h3>Why Should I PLAN My Spending? 📋</h3>
+            <div class="lesson-body">
+              Spending without a plan is like going on a road trip without a map — you might end up somewhere you didn't want to be! <strong>Planning your spending</strong> means deciding AHEAD of time what you'll buy with your money.<br><br>
+              A spending plan helps you:
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
+              <div style="background:var(--green-light);border-left:4px solid var(--green);border-radius:var(--radius);padding:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:26px;">✅</span><div><strong>Make sure you have enough for needs first</strong><div style="font-size:13px;color:var(--text2);">Food, school supplies, and important things come before toys!</div></div></div>
+              <div style="background:var(--sky-light);border-left:4px solid var(--sky);border-radius:var(--radius);padding:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:26px;">✅</span><div><strong>Avoid running out of money too fast</strong><div style="font-size:13px;color:var(--text2);">When you know what you'll spend, surprises don't catch you off guard!</div></div></div>
+              <div style="background:var(--sun-light);border-left:4px solid var(--sun);border-radius:var(--radius);padding:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:26px;">✅</span><div><strong>Save for bigger goals</strong><div style="font-size:13px;color:var(--text2);">If you don't plan, you might spend your savings without even realizing it!</div></div></div>
+            </div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Story: Planned vs. Unplanned</div>
+              <div class="scenario-body">
+                <strong>Unplanned:</strong> Olivia gets $5. She sees candy ($1.50), a sticker pack ($2), and a pencil ($1) at the store all at once. She buys everything — but now she has only 50¢ left, and she forgot she needed a glue stick ($1.50) for school tomorrow! 😬<br><br>
+                <strong>Planned:</strong> Noah gets $5 and thinks first: "I need a glue stick for $1.50. I'll save $2 for my toy goal. That leaves me $1.50 for fun stuff." He buys the glue stick and a treat — and stays on track! ✅
+              </div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Quick Check</div>
+              Why is it smart to plan your spending before you go to the store?
+            </div>
+            <div class="choices" id="sp0-plan-q1">
+              <button class="choice" onclick="pick(this,'wrong','sp0-plan-fb1')"><span class="choice-emoji">💭</span>So you can buy more things faster</button>
+              <button class="choice" onclick="pick(this,'correct','sp0-plan-fb1')"><span class="choice-emoji">📋</span>So you make sure needs are covered and money doesn't run out too fast</button>
+              <button class="choice" onclick="pick(this,'wrong','sp0-plan-fb1')"><span class="choice-emoji">😴</span>Planning is only for grown-ups</button>
+            </div>
+            <div class="feedback" id="sp0-plan-fb1"></div>
+          </div>
+
+          <div class="lesson-card">
+            <h3>Every Choice Has a Trade-Off 🔄</h3>
+            <div class="lesson-body">
+              When you buy one thing, you give up the chance to buy something else with the same money. This is called a <strong>trade-off</strong>.<br><br>Money runs out! So every spending choice matters.
+            </div>
+            <div class="callout callout-sky">
+              <div class="callout-label">💡 Opportunity Cost</div>
+              The thing you give up when you choose something else is called the <strong>opportunity cost</strong>. Big words, simple idea: you can't always have everything!
+            </div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Story: Priya's $3</div>
+              <div class="scenario-body">Priya has <strong>$3</strong>. She sees a bouncy ball ($3) and a book of jokes ($3). She can only pick ONE. She picks the joke book.<br><br>Her <strong>trade-off</strong>: She got a funny book, but now she can't have the bouncy ball. The bouncy ball is her <strong>opportunity cost</strong>.</div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Quick Check</div>
+              Tyler has $4. He buys a pack of trading cards for $4. Later he sees his favorite snack for $2. What's Tyler's problem?
+            </div>
+            <div class="choices" id="sp0-q1">
+              <button class="choice" onclick="pick(this,'wrong','sp0-fb1')"><span class="choice-emoji">💭</span>He spent his money wisely on the cards</button>
+              <button class="choice" onclick="pick(this,'correct','sp0-fb1')"><span class="choice-emoji">💭</span>He spent all his money, so now he can't buy the snack — trade-off!</button>
+            </div>
+            <div class="feedback" id="sp0-fb1"></div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('sp',0);goSub('sp',1)">Play the Store Game! → 🏪</button>
+          </div>
+        </div>
+
+        <!-- Sub 1: Store Game -->
+        <div id="sub-sp-1" style="display:none;">
+          <div class="lesson-card">
+            <h3>You're at the Store! 🛒</h3>
+            <div class="lesson-body">You have <strong>$5</strong> to spend. Tap items to pick them — but watch your money! You can't go over $5.</div>
+            <div class="store-grid" id="store-items">
+              <div class="store-item" data-price="1.50" onclick="toggleItem(this)"><div class="store-emoji">🍬</div><div class="store-name">Candy</div><div class="store-price">$1.50</div></div>
+              <div class="store-item" data-price="3.00" onclick="toggleItem(this)"><div class="store-emoji">📚</div><div class="store-name">Comic Book</div><div class="store-price">$3.00</div></div>
+              <div class="store-item" data-price="4.50" onclick="toggleItem(this)"><div class="store-emoji">🪀</div><div class="store-name">Yo-yo</div><div class="store-price">$4.50</div></div>
+              <div class="store-item" data-price="2.00" onclick="toggleItem(this)"><div class="store-emoji">✏️</div><div class="store-name">Pencil Set</div><div class="store-price">$2.00</div></div>
+              <div class="store-item" data-price="1.00" onclick="toggleItem(this)"><div class="store-emoji">🧃</div><div class="store-name">Juice Box</div><div class="store-price">$1.00</div></div>
+              <div class="store-item" data-price="5.00" onclick="toggleItem(this)"><div class="store-emoji">🎨</div><div class="store-name">Art Set</div><div class="store-price">$5.00</div></div>
+            </div>
+            <div class="money-display"><span>💰 Money left:</span><span class="money-amount" id="store-remaining">$5.00</span></div>
+            <div style="text-align:center;font-size:14px;font-weight:800;color:var(--text3);margin-bottom:14px;" id="store-status">Pick what you can afford!</div>
+            <div class="callout callout-sky">
+              <div class="callout-label">🤔 Think About It</div>
+              What trade-offs did you make? What did you give up to get what you chose?
+            </div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('sp',1);goSub('sp',2)">Next: Smart Tips → 💡</button>
+          </div>
+        </div>
+
+        <!-- Sub 2: Smart Tips -->
+        <div id="sub-sp-2" style="display:none;">
+          <div class="lesson-card">
+            <h3>How to Spend Smart 💡</h3>
+            <div class="lesson-body">Being a smart spender doesn't mean never buying fun things — it means thinking first!</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
+              <div style="background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:14px;display:flex;gap:12px;align-items:center;"><span style="font-size:28px;">🤔</span><div><strong>Ask: Do I need this or just want it?</strong><div style="font-size:13px;color:var(--text2);">If it's a want, can I wait?</div></div></div>
+              <div style="background:var(--sun-light);border:3px solid var(--sun);border-radius:var(--radius);padding:14px;display:flex;gap:12px;align-items:center;"><span style="font-size:28px;">💭</span><div><strong>Wait 1 day before buying something big</strong><div style="font-size:13px;color:var(--text2);">Sleep on it — you might not want it tomorrow!</div></div></div>
+              <div style="background:var(--green-light);border:3px solid var(--green);border-radius:var(--radius);padding:14px;display:flex;gap:12px;align-items:center;"><span style="font-size:28px;">🎯</span><div><strong>Remember what you're saving for</strong><div style="font-size:13px;color:var(--text2);">Is spending now worth delaying your goal?</div></div></div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Final Challenge</div>
+              Aisha has $3. She's saving for a $10 doll. At the store she sees cotton candy for $3. What should she do?
+            </div>
+            <div class="choices" id="sp2-q1">
+              <button class="choice" onclick="pick(this,'correct','sp2-fb1')"><span class="choice-emoji">🐷</span>Save the $3 — she's 30% of the way to her doll!</button>
+              <button class="choice" onclick="pick(this,'wrong','sp2-fb1')"><span class="choice-emoji">🍭</span>Buy the cotton candy — life is short!</button>
+            </div>
+            <div class="feedback" id="sp2-fb1"></div>
+          </div>
+          <div style="text-align:center;margin-bottom:20px;">
+            <button class="btn-big btn-green" onclick="markSub('sp',2);completeModule('k2-spending')">I learned it all! ✅</button>
+          </div>
+        </div>
+
+        <div class="module-complete" id="complete-k2-spending">
+          <div class="complete-confetti">🏪 ⭐ 🏪 ⭐ 🏪</div>
+          <span class="complete-burst">🏪</span>
+          <div class="complete-title">Smart Shopper!</div>
+          <div class="complete-msg">Every spending choice is a trade-off. Thinking before you spend is one of the best habits you can build! 💡</div>
+          <div class="xp-pop">⭐ +30 Stars!</div>
+          <button class="btn-big btn-sky" onclick="navTo('learn-to-earn')">Next: Learn to Earn →</button>
+        </div>
+      </div><!-- end k2-spending -->
+
+      <!-- ════════════════════════════════════════
+           MODULE: LEARN TO EARN
+           Subsections: Invest in Yourself | Jobs in My Town | Earning Stories
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-learn-to-earn">
+        <div class="mod-header" style="background:linear-gradient(135deg,var(--green-light),var(--white));border-color:var(--green);">
+          <span class="mod-big-icon">💪</span>
+          <div class="mod-title">Learn to Earn</div>
+          <div class="mod-chips"><span class="chip">⏱ ~30 min</span><span class="chip">⭐ 30 Stars</span><span class="chip">3 Lessons</span></div>
+        </div>
+        <div class="sub-tabs" id="tabs-lte">
+          <div class="sub-tab active" onclick="goSub('lte',0)" id="stab-lte-0"><span class="sub-tab-icon">🧠</span>Invest in YOU!<span class="sub-tab-check" id="stchk-lte-0"></span></div>
+          <div class="sub-tab" onclick="goSub('lte',1)" id="stab-lte-1"><span class="sub-tab-icon">🏘️</span>Jobs in My Town<span class="sub-tab-check" id="stchk-lte-1"></span></div>
+          <div class="sub-tab" onclick="goSub('lte',2)" id="stab-lte-2"><span class="sub-tab-icon">💰</span>Earning Stories<span class="sub-tab-check" id="stchk-lte-2"></span></div>
+        </div>
+
+        <!-- Sub 0: Invest in Yourself -->
+        <div id="sub-lte-0">
+          <div class="lesson-card">
+            <h3>Invest in Yourself! 🧠✨</h3>
+            <div class="lesson-body">
+              You've heard of saving money — but did you know you can <strong>invest in yourself</strong>?<br><br>
+              <strong>Human capital</strong> means all the things that make YOU valuable — your knowledge, skills, and talents. When you go to school, practice an instrument, learn to read better, or try a sport, you're building human capital!<br><br>
+              Think of it like putting coins in a piggy bank — except instead of coins, you're adding skills. And the more skills you have, the more you'll be able to earn when you grow up! 🌱
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:18px;">
+              <div style="background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:14px;text-align:center;"><div style="font-size:32px;">📚</div><div style="font-family:'Fredoka One',cursive;font-size:14px;color:var(--navy);margin-top:6px;">Going to School</div><div style="font-size:11px;color:var(--text2);margin-top:3px;font-weight:700;">Learn math, reading, science!</div></div>
+              <div style="background:var(--green-light);border:3px solid var(--green);border-radius:var(--radius);padding:14px;text-align:center;"><div style="font-size:32px;">🎹</div><div style="font-family:'Fredoka One',cursive;font-size:14px;color:var(--navy);margin-top:6px;">Practicing Music</div><div style="font-size:11px;color:var(--text2);margin-top:3px;font-weight:700;">Build a special talent!</div></div>
+              <div style="background:var(--sun-light);border:3px solid var(--sun);border-radius:var(--radius);padding:14px;text-align:center;"><div style="font-size:32px;">⚽</div><div style="font-family:'Fredoka One',cursive;font-size:14px;color:var(--navy);margin-top:6px;">Playing Sports</div><div style="font-size:11px;color:var(--text2);margin-top:3px;font-weight:700;">Build teamwork &amp; strength!</div></div>
+              <div style="background:var(--purple-light);border:3px solid var(--purple);border-radius:var(--radius);padding:14px;text-align:center;"><div style="font-size:32px;">🍳</div><div style="font-family:'Fredoka One',cursive;font-size:14px;color:var(--navy);margin-top:6px;">Learning to Cook</div><div style="font-size:11px;color:var(--text2);margin-top:3px;font-weight:700;">A life skill for always!</div></div>
+            </div>
+            <div class="callout callout-sky">
+              <div class="callout-label">💡 Why Does It Matter?</div>
+              A doctor goes to school for many years to learn how to help sick people. Because of all that learning, doctors can do a very important job — and they earn more money too! School today = bigger opportunities tomorrow. 🎓
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Quick Check</div>
+              Sam practices reading every day for 30 minutes. How is Sam "investing in themselves"?
+            </div>
+            <div class="choices" id="lte0-q1">
+              <button class="choice" onclick="pick(this,'wrong','lte0-fb1')"><span class="choice-emoji">😴</span>Sam is wasting time that could be spent playing</button>
+              <button class="choice" onclick="pick(this,'correct','lte0-fb1')"><span class="choice-emoji">🧠</span>Sam is building a skill that will help them do better in school and future jobs!</button>
+              <button class="choice" onclick="pick(this,'wrong','lte0-fb1')"><span class="choice-emoji">💭</span>Only adults need to read well</button>
+            </div>
+            <div class="feedback" id="lte0-fb1"></div>
+
+            <div class="scenario">
+              <div class="scenario-title">🌟 Story: Zara's Piano Practice</div>
+              <div class="scenario-body">Zara practices piano every afternoon instead of watching TV. It's hard work at first, but after a year she can play real songs! Her school offers her a music scholarship worth $500 when she's older.<br><br>All those hours of practice were an <strong>investment in herself</strong> — and it paid off! 🎹💰</div>
+            </div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('lte',0);goSub('lte',1)">Next: Jobs in My Town → 🏘️</button>
+          </div>
+        </div>
+
+        <!-- Sub 1: Jobs in My Town -->
+        <div id="sub-lte-1">
+          <div class="lesson-card">
+            <h3>Jobs in My Town! 🏘️</h3>
+            <div class="lesson-body">Every town has people doing important jobs. Match each worker to what they do!</div>
+            <div id="match-game-lte"></div>
+            <div class="feedback" id="lte1-match-fb"></div>
+            <div style="display:none;text-align:center;margin-top:10px;" id="lte1-match-done">
+              <div class="callout callout-green">
+                <div class="callout-label">🌟 Great Job!</div>
+                Every job in your town is important — and each one requires different skills! That's why investing in learning matters. 💪
+              </div>
+            </div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('lte',1);goSub('lte',2)">Next: Earning Stories → 💰</button>
+          </div>
+        </div>
+
+        <!-- Sub 2: Earning Stories -->
+        <div id="sub-lte-2">
+          <div class="lesson-card">
+            <h3>How Kids Can Earn Money Now 💰</h3>
+            <div class="lesson-body">You don't have to wait until you grow up! Kids can earn money today by finding jobs they can do right now.</div>
+            <div class="info-grid">
+              <div class="info-card"><div class="info-emoji">🧹</div><div class="info-name">Sweep Floors</div><div class="info-val">Chores at home</div></div>
+              <div class="info-card sun"><div class="info-emoji">🐕</div><div class="info-name">Dog Walking</div><div class="info-val">Help neighbors</div></div>
+              <div class="info-card green"><div class="info-emoji">🌱</div><div class="info-name">Water Plants</div><div class="info-val">Easy yard work</div></div>
+              <div class="info-card purple"><div class="info-emoji">🍋</div><div class="info-name">Lemonade Stand</div><div class="info-val">Be an entrepreneur!</div></div>
+              <div class="info-card"><div class="info-emoji">📦</div><div class="info-name">Recycle Cans</div><div class="info-val">Help the Earth!</div></div>
+              <div class="info-card sun"><div class="info-emoji">🎨</div><div class="info-name">Make Cards</div><div class="info-val">Sell handmade art</div></div>
+            </div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Story: Leo's Lemonade Stand</div>
+              <div class="scenario-body">Leo makes lemonade with his mom and sells cups in front of his house for 50¢ each. On Saturday he sells <strong>10 cups</strong>. How much did Leo earn?<br><br>10 × 50¢ = <strong>$5.00</strong>! Leo used a skill (making lemonade) to earn real money — just like a grown-up running a business! 🍋💰</div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Final Challenge</div>
+              Jordan helps the neighbor walk the dog 3 times this week and earns $2 each time. How much did Jordan earn?
+            </div>
+            <div class="choices" id="lte2-q1">
+              <button class="choice" onclick="pick(this,'wrong','lte2-fb1')"><span class="choice-emoji">💭</span>$2</button>
+              <button class="choice" onclick="pick(this,'wrong','lte2-fb1')"><span class="choice-emoji">💭</span>$4</button>
+              <button class="choice" onclick="pick(this,'correct','lte2-fb1')"><span class="choice-emoji">💭</span>$6</button>
+              <button class="choice" onclick="pick(this,'wrong','lte2-fb1')"><span class="choice-emoji">💭</span>$5</button>
+            </div>
+            <div class="feedback" id="lte2-fb1"></div>
+          </div>
+          <div style="text-align:center;margin-bottom:20px;">
+            <button class="btn-big btn-green" onclick="markSub('lte',2);completeModule('learn-to-earn')">I learned it all! ✅</button>
+          </div>
+        </div>
+
+        <div class="module-complete" id="complete-learn-to-earn">
+          <div class="complete-confetti">💪 ⭐ 💪 ⭐ 💪</div>
+          <span class="complete-burst">💪</span>
+          <div class="complete-title">Earning Expert!</div>
+          <div class="complete-msg">You know about human capital, jobs in your town, and how to earn money right now. Every skill you learn is an investment in YOU! 🌟</div>
+          <div class="xp-pop">⭐ +30 Stars!</div>
+          <button class="btn-big btn-sky" onclick="navTo('k2-goal-setting')">Next: Ready. Set. Goal! →</button>
+        </div>
+      </div><!-- end learn-to-earn -->
+
+      <!-- ════════════════════════════════════════
+           MODULE: GOAL SETTING
+           Subsections: What is a Goal? | Make a Plan | Reach Your Goal
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-k2-goal-setting">
+        <div class="mod-header" style="background:linear-gradient(135deg,var(--purple-light),var(--white));border-color:var(--purple);">
+          <span class="mod-big-icon">🎯</span>
+          <div class="mod-title">Ready. Set. Goal!</div>
+          <div class="mod-chips"><span class="chip">⏱ ~30 min</span><span class="chip">⭐ 30 Stars</span><span class="chip">3 Lessons</span></div>
+        </div>
+        <div class="sub-tabs" id="tabs-gs">
+          <div class="sub-tab active" onclick="goSub('gs',0)" id="stab-gs-0"><span class="sub-tab-icon">🤔</span>What's a Goal?<span class="sub-tab-check" id="stchk-gs-0"></span></div>
+          <div class="sub-tab" onclick="goSub('gs',1)" id="stab-gs-1"><span class="sub-tab-icon">📋</span>Make a Plan<span class="sub-tab-check" id="stchk-gs-1"></span></div>
+          <div class="sub-tab" onclick="goSub('gs',2)" id="stab-gs-2"><span class="sub-tab-icon">🏆</span>Reach It!<span class="sub-tab-check" id="stchk-gs-2"></span></div>
+        </div>
+
+        <!-- Sub 0 -->
+        <div id="sub-gs-0">
+          <div class="lesson-card">
+            <h3>Dreams vs. Goals 🌈</h3>
+            <div class="lesson-body">A <strong>dream</strong> is something you wish for. A <strong>goal</strong> is something you plan and work toward. Dreams are free! Goals take effort — and they actually happen! 🌟</div>
+            <div class="comp-row">
+              <div class="comp-box comp-box-sky"><div class="comp-label">💭 Dream</div><div class="comp-desc">"I wish I had a new bike."<br><br>Just a wish — no plan!</div></div>
+              <div class="comp-box comp-box-green"><div class="comp-label">🎯 Goal</div><div class="comp-desc">"I'm saving $4/week so I can buy a $20 bike in 5 weeks."<br><br>A real plan! ✅</div></div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Quick Check</div>
+              Which one is a GOAL (not just a dream)?
+            </div>
+            <div class="choices" id="gs0-q1">
+              <button class="choice" onclick="pick(this,'wrong','gs0-fb1')"><span class="choice-emoji">💭</span>"I want a new book someday."</button>
+              <button class="choice" onclick="pick(this,'correct','gs0-fb1')"><span class="choice-emoji">🎯</span>"I'll save $2/week for 4 weeks to buy an $8 book."</button>
+              <button class="choice" onclick="pick(this,'wrong','gs0-fb1')"><span class="choice-emoji">💭</span>"Books are really fun to read."</button>
+            </div>
+            <div class="feedback" id="gs0-fb1"></div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('gs',0);goSub('gs',1)">Next: Make a Plan → 📋</button>
+          </div>
+        </div>
+
+        <!-- Sub 1 -->
+        <div id="sub-gs-1">
+          <div class="lesson-card">
+            <h3>Build Your Money Goal! 📋</h3>
+            <div class="lesson-body">A great money goal has 3 parts:</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
+              <div style="background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:12px;"><span style="font-size:30px;">🤔</span><div><div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--sky);">1. WHAT am I saving for?</div><div style="font-size:13px;color:var(--text2);font-weight:700;">Example: A stuffed dragon 🐉</div></div></div>
+              <div style="background:var(--sun-light);border:3px solid var(--sun);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:12px;"><span style="font-size:30px;">💰</span><div><div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--navy);">2. HOW MUCH does it cost?</div><div style="font-size:13px;color:var(--text2);font-weight:700;">Example: $12</div></div></div>
+              <div style="background:var(--green-light);border:3px solid var(--green);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:12px;"><span style="font-size:30px;">📅</span><div><div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--green);">3. HOW will I save?</div><div style="font-size:13px;color:var(--text2);font-weight:700;">Example: Save $3/week × 4 weeks = $12!</div></div></div>
+            </div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Story: Mia's Goal Chart</div>
+              <div class="scenario-body">Mia wants a $16 art set. She earns $4 per week helping set the table. She makes a chart with 4 empty boxes. Each week she saves $4 and colors in a box. After 4 weeks — all boxes filled! She buys the art set! 🎨<br><br>The goal chart kept her motivated the whole time!</div>
+            </div>
+            <div class="goal-visual">
+              <div style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--navy);margin-bottom:4px;">Mia's Art Set Goal 🎨</div>
+              <div style="font-size:14px;color:var(--text2);font-weight:700;margin-bottom:12px;">$4/week × 4 weeks = $16</div>
+              <div class="goal-steps">
+                <div class="goal-step filled" style="background:var(--sun-light);border-color:var(--sun);">$4</div>
+                <div class="goal-arrow">→</div>
+                <div class="goal-step filled" style="background:var(--sun-light);border-color:var(--sun);">$8</div>
+                <div class="goal-arrow">→</div>
+                <div class="goal-step filled" style="background:var(--sun-light);border-color:var(--sun);">$12</div>
+                <div class="goal-arrow">→</div>
+                <div class="goal-step filled" style="background:var(--sun-light);border-color:var(--sun);">$16</div>
+                <div class="goal-arrow">→</div>
+                <div style="font-size:32px;">🎨</div>
+              </div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Goal Math!</div>
+              Ben wants to save $15 for a toy. He earns $3 per week. How many weeks does Ben need?
+            </div>
+            <div class="choices" id="gs1-q1">
+              <button class="choice" onclick="pick(this,'wrong','gs1-fb1')"><span class="choice-emoji">💭</span>3 weeks</button>
+              <button class="choice" onclick="pick(this,'correct','gs1-fb1')"><span class="choice-emoji">💭</span>5 weeks</button>
+              <button class="choice" onclick="pick(this,'wrong','gs1-fb1')"><span class="choice-emoji">💭</span>15 weeks</button>
+            </div>
+            <div class="feedback" id="gs1-fb1"></div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('gs',1);goSub('gs',2)">Next: Reach It! → 🏆</button>
+          </div>
+        </div>
+
+        <!-- Sub 2 -->
+        <div id="sub-gs-2">
+          <div class="lesson-card">
+            <h3>What Helps You Reach Your Goal? 🏆</h3>
+            <div class="lesson-body">Setting a goal is step 1. Reaching it takes consistency — doing it again and again, even when it's hard!</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
+              <div style="background:var(--green-light);border-left:4px solid var(--green);border-radius:var(--radius);padding:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:26px;">✅</span><div><strong>Keep a visual chart</strong> — seeing progress feels amazing!</div></div>
+              <div style="background:var(--sky-light);border-left:4px solid var(--sky);border-radius:var(--radius);padding:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:26px;">✅</span><div><strong>Tell a trusted adult your goal</strong> — they can help you stay on track</div></div>
+              <div style="background:var(--sun-light);border-left:4px solid var(--sun);border-radius:var(--radius);padding:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:26px;">✅</span><div><strong>Celebrate milestones</strong> — halfway to your goal? Do a happy dance! 💃</div></div>
+              <div style="background:var(--red-light);border-left:4px solid var(--red);border-radius:var(--radius);padding:12px;display:flex;align-items:center;gap:10px;"><span style="font-size:26px;">❌</span><div><strong>Don't change your goal every week</strong> — stick with it!</div></div>
+            </div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Story: Two Friends, Two Choices</div>
+              <div class="scenario-body">Omar and Kesha both want to save $12 for a puzzle. Omar saves $3 each week consistently. Kesha saves some weeks but spends the money other weeks.<br><br>After 4 weeks: Omar has <strong>$12</strong> ✅ Kesha has <strong>$4</strong> 😢<br><br>Consistency is the superpower! 💪</div>
+            </div>
+            <div class="callout callout-sky">
+              <div class="callout-label">🎯 Final Check</div>
+              Which habit helps you reach a savings goal?
+            </div>
+            <div class="choices" id="gs2-q1">
+              <button class="choice" onclick="pick(this,'wrong','gs2-fb1')"><span class="choice-emoji">💭</span>Save when you feel like it, spend when you don't</button>
+              <button class="choice" onclick="pick(this,'correct','gs2-fb1')"><span class="choice-emoji">🎯</span>Save the same amount every week no matter what</button>
+            </div>
+            <div class="feedback" id="gs2-fb1"></div>
+          </div>
+          <div style="text-align:center;margin-bottom:20px;">
+            <button class="btn-big btn-green" onclick="markSub('gs',2);completeModule('k2-goal-setting')">I learned it all! ✅</button>
+          </div>
+        </div>
+
+        <div class="module-complete" id="complete-k2-goal-setting">
+          <div class="complete-confetti">🎯 ⭐ 🎯 ⭐ 🎯</div>
+          <span class="complete-burst">🎯</span>
+          <div class="complete-title">Goal Getter!</div>
+          <div class="complete-msg">You know the difference between dreams and goals, how to make a plan, and how to stay consistent. These skills will last a lifetime!</div>
+          <div class="xp-pop">⭐ +30 Stars!</div>
+          <button class="btn-big btn-sky" onclick="navTo('super-savers')">Next: Super Savers →</button>
+        </div>
+      </div><!-- end goal-setting -->
+
+      <!-- ════════════════════════════════════════
+           MODULE: SUPER SAVERS
+           Subsections: Spend vs. Save | Where to Keep Money | Saving Stories
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-super-savers">
+        <div class="mod-header" style="background:linear-gradient(135deg,var(--purple-light),var(--white));border-color:var(--purple);">
+          <span class="mod-big-icon">🦸</span>
+          <div class="mod-title">Super Savers</div>
+          <div class="mod-chips"><span class="chip">⏱ ~30 min</span><span class="chip">⭐ 30 Stars</span><span class="chip">3 Lessons</span></div>
+        </div>
+        <div class="sub-tabs" id="tabs-ss">
+          <div class="sub-tab active" onclick="goSub('ss',0)" id="stab-ss-0"><span class="sub-tab-icon">⚖️</span>Spend vs. Save<span class="sub-tab-check" id="stchk-ss-0"></span></div>
+          <div class="sub-tab" onclick="goSub('ss',1)" id="stab-ss-1"><span class="sub-tab-icon">🏦</span>Where to Keep It<span class="sub-tab-check" id="stchk-ss-1"></span></div>
+          <div class="sub-tab" onclick="goSub('ss',2)" id="stab-ss-2"><span class="sub-tab-icon">🌟</span>Saving Stories<span class="sub-tab-check" id="stchk-ss-2"></span></div>
+        </div>
+
+        <div id="sub-ss-0">
+          <div class="lesson-card">
+            <h3>Spend Now or Save for Later? ⚖️</h3>
+            <div class="lesson-body">Both spending and saving are okay — the trick is knowing when to do which! Spending is fine for things you truly need or for smart wants. Saving is smart when you have a goal or don't really need something right now.</div>
+            <div class="comp-row">
+              <div class="comp-box comp-box-sun"><div class="comp-label">🛒 Spending Makes Sense When...</div><div class="comp-desc">• You need it<br>• You've thought about it<br>• It fits your budget<br>• You've already reached your savings goal!</div></div>
+              <div class="comp-box comp-box-green"><div class="comp-label">🐷 Saving Makes Sense When...</div><div class="comp-desc">• You want something bigger later<br>• It's an impulse (just saw it randomly)<br>• You'd regret spending<br>• You have a goal in progress</div></div>
+            </div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Jordan Gets $5</div>
+              <div class="scenario-body">Jordan earns $5 for washing the family car. Jordan is saving for a $12 toy and already has $7. Should Jordan spend or save?<br><br>$7 + $5 = <strong>$12</strong> — exactly the goal! Save it and buy the toy! 🎉</div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Quick Check</div>
+              Aaliyah sees a $4 candy bar at the checkout counter. She wasn't planning to buy it. What should she probably do?
+            </div>
+            <div class="choices" id="ss0-q1">
+              <button class="choice" onclick="pick(this,'correct','ss0-fb1')"><span class="choice-emoji">🐷</span>Skip it — it's an impulse buy. Save the $4!</button>
+              <button class="choice" onclick="pick(this,'wrong','ss0-fb1')"><span class="choice-emoji">🍫</span>Buy it — she deserves a treat!</button>
+            </div>
+            <div class="feedback" id="ss0-fb1"></div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('ss',0);goSub('ss',1)">Next: Where to Keep It → 🏦</button>
+          </div>
+        </div>
+
+        <div id="sub-ss-1" style="display:none;">
+          <div class="lesson-card">
+            <h3>Where Should You Keep Saved Money? 🏦</h3>
+            <div class="lesson-body">You've decided to save — great! But where do you put it?</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px;">
+              <div style="background:var(--sun-light);border:3px solid var(--sun);border-radius:var(--radius);padding:16px;display:flex;align-items:center;gap:14px;"><div style="font-size:40px;flex-shrink:0;">🐷</div><div><div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--navy);">Piggy Bank</div><div style="font-size:14px;color:var(--text2);font-weight:700;line-height:1.6;">✅ Easy to use at home<br>❌ Could get lost, broken, or stolen<br>❌ Doesn't grow over time</div></div></div>
+              <div style="background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:16px;display:flex;align-items:center;gap:14px;"><div style="font-size:40px;flex-shrink:0;">🏦</div><div><div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--sky);">Bank / Savings Account</div><div style="font-size:14px;color:var(--text2);font-weight:700;line-height:1.6;">✅ Super safe — protected by the government!<br>✅ Earns a little extra money called <strong>interest</strong><br>✅ You can always get it back</div></div></div>
+            </div>
+            <div class="callout callout-sky">
+              <div class="callout-label">💡 What is Interest?</div>
+              When you put money in a bank, the bank pays you a little extra for letting them hold it. It's like a thank-you bonus! If you save $100, the bank might give you $2 extra. That's <strong>interest</strong> — free money for saving! 🎉
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Scenario</div>
+              Alex put $20 in a piggy bank on the floor. Their puppy knocked it over and money went everywhere. What would have been safer?
+            </div>
+            <div class="choices" id="ss1-q1">
+              <button class="choice" onclick="pick(this,'wrong','ss1-fb1')"><span class="choice-emoji">🛏️</span>Under the mattress — puppies can't reach it!</button>
+              <button class="choice" onclick="pick(this,'correct','ss1-fb1')"><span class="choice-emoji">🏦</span>In a bank savings account — protected and safe, plus it earns interest!</button>
+            </div>
+            <div class="feedback" id="ss1-fb1"></div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('ss',1);goSub('ss',2)">Next: Saving Stories → 🌟</button>
+          </div>
+        </div>
+
+        <div id="sub-ss-2" style="display:none;">
+          <div class="lesson-card">
+            <h3>Real Stories About Saving 🌟</h3>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Story: Grace Saves for Camp</div>
+              <div class="scenario-body">Grace really wants to go to art camp next summer. It costs <strong>$60</strong>. She starts saving in January — $5 per week from her allowance.<br><br>60 ÷ 5 = 12 weeks. By April, she's saved enough! Grace goes to camp and makes friends who love art too. 🎨<br><br>Saving wasn't just about money — it led to an amazing experience!</div>
+            </div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Story: The Broken Controller</div>
+              <div class="scenario-body">Diego's game controller broke. He had $15 saved in his piggy bank — money he wasn't saving for anything specific. It cost exactly $15 to replace.<br><br>His savings handled an <strong>unexpected problem!</strong> That's another reason saving is smart — surprises happen. 🎮</div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Final Check</div>
+              Which is the BEST reason to save money?
+            </div>
+            <div class="choices" id="ss2-q1">
+              <button class="choice" onclick="pick(this,'wrong','ss2-fb1')"><span class="choice-emoji">💭</span>So you never have to spend it</button>
+              <button class="choice" onclick="pick(this,'correct','ss2-fb1')"><span class="choice-emoji">🐷</span>To reach goals AND handle surprises when they happen!</button>
+              <button class="choice" onclick="pick(this,'wrong','ss2-fb1')"><span class="choice-emoji">💭</span>To show off how much money you have</button>
+            </div>
+            <div class="feedback" id="ss2-fb1"></div>
+          </div>
+          <div style="text-align:center;margin-bottom:20px;">
+            <button class="btn-big btn-green" onclick="markSub('ss',2);completeModule('super-savers')">I learned it all! ✅</button>
+          </div>
+        </div>
+
+        <div class="module-complete" id="complete-super-savers">
+          <div class="complete-confetti">🦸 ⭐ 🦸 ⭐ 🦸</div>
+          <span class="complete-burst">🦸</span>
+          <div class="complete-title">Super Saver!</div>
+          <div class="complete-msg">You know when to spend vs. save, where to keep your money, and why saving solves real problems. You're a money superhero! 🦸‍♀️</div>
+          <div class="xp-pop">⭐ +30 Stars!</div>
+          <button class="btn-big btn-sky" onclick="navTo('k2-borrowing')">Next: Borrowing &amp; Lending →</button>
+        </div>
+      </div><!-- end super-savers -->
+
+      <!-- ════════════════════════════════════════
+           MODULE: BORROWING & LENDING
+           Subsections: What is Borrowing? | Rules of Borrowing | Borrow or Gift?
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-k2-borrowing">
+        <div class="mod-header" style="background:linear-gradient(135deg,var(--orange-light),var(--white));border-color:var(--orange);">
+          <span class="mod-big-icon">🤲</span>
+          <div class="mod-title">Borrowing &amp; Lending</div>
+          <div class="mod-chips"><span class="chip">⏱ ~30 min</span><span class="chip">⭐ 30 Stars</span><span class="chip">3 Lessons</span></div>
+        </div>
+        <div class="sub-tabs" id="tabs-bor">
+          <div class="sub-tab active" onclick="goSub('bor',0)" id="stab-bor-0"><span class="sub-tab-icon">📖</span>What is It?<span class="sub-tab-check" id="stchk-bor-0"></span></div>
+          <div class="sub-tab" onclick="goSub('bor',1)" id="stab-bor-1"><span class="sub-tab-icon">📋</span>The Rules<span class="sub-tab-check" id="stchk-bor-1"></span></div>
+          <div class="sub-tab" onclick="goSub('bor',2)" id="stab-bor-2"><span class="sub-tab-icon">🧩</span>Borrow or Gift?<span class="sub-tab-check" id="stchk-bor-2"></span></div>
+        </div>
+
+        <!-- Sub 0 -->
+        <div id="sub-bor-0">
+          <div class="lesson-card">
+            <h3>Borrowing vs. Getting a Gift 🎁</h3>
+            <div class="lesson-body">When someone gives you a <strong>gift</strong>, it's yours forever! But when someone lets you <strong>borrow</strong> something, you use it for a while and then give it back.<br><br>Borrowing money is common — even grown-ups borrow from banks! But borrowed money always has to go back.</div>
+            <div class="comp-row">
+              <div class="comp-box comp-box-green"><div class="comp-label">🎁 Gift</div><div class="comp-desc">Yours to keep forever. No need to give it back! Example: birthday present 🎂</div></div>
+              <div class="comp-box comp-box-sky"><div class="comp-label">📖 Borrowed</div><div class="comp-desc">You use it, then return it. Example: library book 📚 or borrowing a pencil at school</div></div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Quick Check</div>
+              Lily gets a book from the library and returns it 2 weeks later. Is that borrowing or a gift?
+            </div>
+            <div class="choices" id="bor0-q1">
+              <button class="choice" onclick="pick(this,'correct','bor0-fb1')"><span class="choice-emoji">📖</span>Borrowing — she used it and gave it back!</button>
+              <button class="choice" onclick="pick(this,'wrong','bor0-fb1')"><span class="choice-emoji">🎁</span>A gift — the library gave her the book</button>
+            </div>
+            <div class="feedback" id="bor0-fb1"></div>
+
+            <div class="scenario">
+              <div class="scenario-title">🌟 Story: Marcus Borrows a Crayon</div>
+              <div class="scenario-body">Marcus forgot his green crayon at home. His classmate Emma lent him one. After class, Marcus remembered to give it back right away — he even said thank you!<br><br>Emma was happy to lend because Marcus was trustworthy. 🌟</div>
+            </div>
+          </div>
+
+          <div class="lesson-card">
+            <h3>What is Lending? 🤲</h3>
+            <div class="lesson-body">
+              In the story above, Emma <strong>lent</strong> Marcus her crayon. <strong>Lending</strong> is when YOU let someone else borrow something of yours — you give it to them temporarily, knowing they will give it back.<br><br>
+              The person who borrows is the <strong>borrower</strong>. The person who lends is the <strong>lender</strong>.
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;">
+              <div style="flex:1;min-width:130px;background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:16px;text-align:center;">
+                <div style="font-size:40px;">🙋</div>
+                <div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--sky);margin-top:6px;">BORROWER</div>
+                <div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:700;">Receives the item or money. Must give it back!</div>
+              </div>
+              <div style="flex:1;min-width:130px;background:var(--green-light);border:3px solid var(--green);border-radius:var(--radius);padding:16px;text-align:center;">
+                <div style="font-size:40px;">🤲</div>
+                <div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--green);margin-top:6px;">LENDER</div>
+                <div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:700;">Shares the item or money. Expects to get it back!</div>
+              </div>
+            </div>
+
+            <h3 style="margin-bottom:12px;">How is Lending Different from Giving? 🤔</h3>
+            <div class="lesson-body">This is super important — lending and giving look similar, but they are <strong>very different</strong>!</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+              <div style="background:var(--green-light);border:3px solid var(--green);border-radius:var(--radius);padding:16px;">
+                <div style="font-family:'Fredoka One',cursive;font-size:17px;color:var(--green);margin-bottom:8px;">🤲 LENDING</div>
+                <div style="font-size:13px;color:var(--text2);font-weight:700;line-height:1.8;">
+                  ✅ You expect it back<br>
+                  ✅ It's still technically yours<br>
+                  ✅ The borrower must return it<br>
+                  Example: Letting a friend borrow your book for the weekend
+                </div>
+              </div>
+              <div style="background:var(--sky-light);border:3px solid var(--sky);border-radius:var(--radius);padding:16px;">
+                <div style="font-family:'Fredoka One',cursive;font-size:17px;color:var(--sky);margin-bottom:8px;">🎁 GIVING</div>
+                <div style="font-size:13px;color:var(--text2);font-weight:700;line-height:1.8;">
+                  ✅ You give it away forever<br>
+                  ✅ It becomes theirs to keep<br>
+                  ✅ No return expected<br>
+                  Example: Giving a friend a birthday gift
+                </div>
+              </div>
+            </div>
+            <div class="callout callout-purple">
+              <div class="callout-label">💡 The Big Difference</div>
+              When you <strong>lend</strong> something, you still own it — you're just letting someone else use it for a while. When you <strong>give</strong> something, it's not yours anymore. That's why lending means the borrower MUST give it back!
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Lending or Giving?</div>
+              Priya gives her old stuffed bear to a younger cousin because she doesn't want it anymore. Is that lending or giving?
+            </div>
+            <div class="choices" id="bor0-q2">
+              <button class="choice" onclick="pick(this,'wrong','bor0-fb2')"><span class="choice-emoji">🤲</span>Lending — the cousin should give it back someday</button>
+              <button class="choice" onclick="pick(this,'correct','bor0-fb2')"><span class="choice-emoji">🎁</span>Giving — Priya gave it away to keep forever, no return expected!</button>
+            </div>
+            <div class="feedback" id="bor0-fb2"></div>
+          </div>
+
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('bor',0);goSub('bor',1)">Next: The Rules → 📋</button>
+          </div>
+        </div>
+
+        <!-- Sub 1 -->
+        <div id="sub-bor-1">
+          <div class="lesson-card">
+            <h3>The Golden Rules of Borrowing 🌟</h3>
+            <div class="lesson-body">When you borrow something — especially money — there are important rules. Following them builds <strong>trust</strong>. And trust is worth more than money!</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
+              <div style="background:var(--green-light);border-left:5px solid var(--green);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:12px;"><span style="font-size:28px;">✅</span><div><div style="font-family:'Fredoka One',cursive;font-size:17px;color:var(--green);">Return it on time</div><div style="font-size:13px;color:var(--text2);font-weight:700;">If you said "I'll give it back Friday" — give it back Friday!</div></div></div>
+              <div style="background:var(--green-light);border-left:5px solid var(--green);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:12px;"><span style="font-size:28px;">✅</span><div><div style="font-family:'Fredoka One',cursive;font-size:17px;color:var(--green);">Take good care of it</div><div style="font-size:13px;color:var(--text2);font-weight:700;">Treat borrowed things better than your own!</div></div></div>
+              <div style="background:var(--green-light);border-left:5px solid var(--green);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:12px;"><span style="font-size:28px;">✅</span><div><div style="font-family:'Fredoka One',cursive;font-size:17px;color:var(--green);">Say thank you</div><div style="font-size:13px;color:var(--text2);font-weight:700;">Lending is a kindness — always show appreciation!</div></div></div>
+              <div style="background:var(--red-light);border-left:5px solid var(--red);border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:12px;"><span style="font-size:28px;">❌</span><div><div style="font-family:'Fredoka One',cursive;font-size:17px;color:var(--red);">Don't pretend it was a gift</div><div style="font-size:13px;color:var(--text2);font-weight:700;">Borrowed = must give back. Every time.</div></div></div>
+            </div>
+            <div class="callout callout-sun">
+              <div class="callout-label">🎯 Scenario</div>
+              Sam borrowed $2 from a friend for lunch. Now Sam has money. The friend doesn't ask for it back. What should Sam do?
+            </div>
+            <div class="choices" id="bor1-q1">
+              <button class="choice" onclick="pick(this,'wrong','bor1-fb1')"><span class="choice-emoji">🍦</span>Buy ice cream — the friend forgot!</button>
+              <button class="choice" onclick="pick(this,'correct','bor1-fb1')"><span class="choice-emoji">🤝</span>Pay the friend back — a promise is a promise, even if they forgot!</button>
+            </div>
+            <div class="feedback" id="bor1-fb1"></div>
+          </div>
+          <div class="next-sub-wrap">
+            <button class="btn-big btn-sky btn-sm" onclick="markSub('bor',1);goSub('bor',2)">Next: Borrow or Gift? → 🧩</button>
+          </div>
+        </div>
+
+        <!-- Sub 2 -->
+        <div id="sub-bor-2">
+          <div class="lesson-card">
+            <h3>Borrow or Gift? — Real Scenarios 🧩</h3>
+            <div class="lesson-body">Let's test what you've learned with some real-life situations!</div>
+            <div class="scenario">
+              <div class="scenario-title">🌟 Scenario 1: The Broken Toy</div>
+              <div class="scenario-body">Tasha borrowed Jade's toy for the weekend. Tasha accidentally broke it. What should Tasha do?</div>
+            </div>
+            <div class="choices" id="bor2-q1">
+              <button class="choice" onclick="pick(this,'wrong','bor2-fb1')"><span class="choice-emoji">😶</span>Say nothing — maybe Jade won't notice</button>
+              <button class="choice" onclick="pick(this,'correct','bor2-fb1')"><span class="choice-emoji">🤝</span>Tell Jade the truth and offer to replace it or help fix it</button>
+            </div>
+            <div class="feedback" id="bor2-fb1"></div>
+
+            <div class="scenario" style="margin-top:16px;">
+              <div class="scenario-title">🌟 Scenario 2: The Birthday Money</div>
+              <div class="scenario-body">Rosa got $10 for her birthday. It's hers to keep — no one lent it to her. Is this borrowing or a gift?</div>
+            </div>
+            <div class="choices" id="bor2-q2">
+              <button class="choice" onclick="pick(this,'wrong','bor2-fb2')"><span class="choice-emoji">📖</span>Borrowing — she got money so she must give it back</button>
+              <button class="choice" onclick="pick(this,'correct','bor2-fb2')"><span class="choice-emoji">🎁</span>A gift! Birthday money is hers to keep — no payback needed</button>
+            </div>
+            <div class="feedback" id="bor2-fb2"></div>
+          </div>
+          <div style="text-align:center;margin-bottom:20px;">
+            <button class="btn-big btn-green" onclick="markSub('bor',2);completeModule('k2-borrowing')">I learned it all! ✅</button>
+          </div>
+        </div>
+
+        <div class="module-complete" id="complete-k2-borrowing">
+          <div class="complete-confetti">🤲 ⭐ 🤲 ⭐ 🤲</div>
+          <span class="complete-burst">🤲</span>
+          <div class="complete-title">Trustworthy Borrower!</div>
+          <div class="complete-msg">You know the difference between borrowing and gifts, the golden rules of borrowing, and how to handle tough real-life situations. Trust is priceless! 🌟</div>
+          <div class="xp-pop">⭐ +30 Stars!</div>
+          <button class="btn-big btn-purple" onclick="navTo('dash')">🏠 Back to Home!</button>
+        </div>
+      </div><!-- end k2-borrowing -->
+
+    </div><!-- end page-wrap -->
+  </div><!-- end app-main -->
+</div><!-- end screen-app -->
+
+<script>
+// ════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════
+const SAVE_KEY = 'findamentals_k2_v1';
+const TOTAL_XP = 240;
+const MODULES = [
+  {id:'what-is-money',   icon:'🪙',name:'What is Money?',      desc:'Coins, bills & why money matters',         xp:30,subs:3},
+  {id:'k2-needs-wants',  icon:'🍎',name:'Needs vs. Wants',     desc:'Must-haves vs. nice-to-haves',             xp:30,subs:3},
+  {id:'saving-up',       icon:'🐷',name:'Saving Up',           desc:'Save a little, reach big goals',           xp:30,subs:3},
+  {id:'k2-spending',     icon:'🏪',name:'Spending Choices',    desc:'Trade-offs & smart shopping',              xp:30,subs:3},
+  {id:'learn-to-earn',   icon:'💪',name:'Learn to Earn',       desc:'Human capital, jobs & earning now',        xp:30,subs:3},
+  {id:'k2-goal-setting', icon:'🎯',name:'Ready. Set. Goal!',   desc:'Dreams vs. goals & making a plan',         xp:30,subs:3},
+  {id:'super-savers',    icon:'🦸',name:'Super Savers',        desc:'Spend vs. save, banks & stories',          xp:30,subs:3},
+  {id:'k2-borrowing',    icon:'🤲',name:'Borrowing & Lending', desc:'Borrow, gift, rules & real scenarios',     xp:30,subs:3},
+];
+const BADGES = [
+  {id:'what-is-money',   icon:'🪙',name:'Coin Master'},
+  {id:'k2-needs-wants',  icon:'🍎',name:'Smart Sorter'},
+  {id:'saving-up',       icon:'🐷',name:'Piggy Pro'},
+  {id:'k2-spending',     icon:'🏪',name:'Smart Shopper'},
+  {id:'learn-to-earn',   icon:'💪',name:'Hard Worker'},
+  {id:'k2-goal-setting', icon:'🎯',name:'Goal Getter'},
+  {id:'super-savers',    icon:'🦸',name:'Super Saver'},
+  {id:'k2-borrowing',    icon:'🤲',name:'Trust Builder'},
+];
+const LEVELS = ['Starter','Explorer','Saver','Earner','Goal Getter','Money Star!','Super Saver!','Champion!','🏆 FINdamentals Master!'];
+const FEEDBACK = {
+  'wim1-hist-fb1':{c:['✅ Correct! 🐚','Shells and stones came FIRST — thousands of years before coins, paper money, or cards!'],w:['❌ Not quite!','Shells and stones were the earliest money — long before paper bills or credit cards were invented!']},
+  'wim0-fb1':{c:['✅ That\'s right!','2 dimes (10¢+10¢=20¢) + 1 nickel (5¢) = 25¢! Great coin math! 🌟'],w:['❌ Let\'s try again!','2 dimes = 20¢, plus 1 nickel = 5¢. Add them: 20 + 5 = 25¢!']},
+  'wim0-fb2':{c:['✅ Correct! Marcus needs 5 more cents! 🧮','3 nickels = 15¢, but the sticker costs 20¢. He\'s 5¢ short!'],w:['❌ Not quite!','3 × 5¢ = 15¢, which is less than 20¢. Size of coins doesn\'t mean more money!']},
+  'wim1-fb1':{c:['✅ Exactly right! 💪','Lila did a job (washing dishes) and got paid for it. That\'s how earning works!'],w:['❌ Nope!','Grandma paid Lila because she did a job — washing dishes every day. Work = earning! 💪']},
+  'wim2-fb1':{c:['✅ Smart thinking! 🐷','Saving now means getting closer to the goal. Candy is fun but the toy lasts longer!'],w:['❌ Careful!','Spending all $5 on candy leaves nothing toward the $12 toy. Saving moves you forward!']},
+  'nw0-fb1': {c:['✅ Right! Needs come first! 🍎','Food is a need — without it, the family can\'t stay healthy. Games are wants.'],w:['❌ Hmm, think again!','A video game is a want — fun, but not essential. Food is a need — essential!']},
+  'nw2-fb1': {c:['✅ Yes! Emma can get both! 🎉','$1 + $4 = $5 exactly. Emma meets her need AND gets her want!'],w:['❌ Try again!','Emma has $5. Soap is $1 + book is $4 = $5 total. She can buy both!']},
+  'su0-fb1': {c:['✅ 5 weeks! 🎉','$10 goal ÷ $2 saved per week = 5 weeks. Patience pays off!',true],w:['❌ Not quite!','$10 ÷ $2 per week = 5 weeks. Try dividing cost by amount saved!']},
+  'su1-fb1': {c:['✅ 4 weeks! 🪁','$12 ÷ $3/week = 4 weeks. Keisha gets her kite! 🎉'],w:['❌ Try the math!','$12 ÷ $3 = 4 weeks. How many times does 3 go into 12?']},
+  'su1-fb2': {c:['✅ 5 weeks! 🚗','$20 ÷ $4/week = 5 weeks. Rafael gets his car!'],w:['❌ Check your division!','$20 ÷ $4 = 5. Think: 4×5 = 20!']},
+  'su2-fb1': {c:['✅ Smart! Stick to the goal! 🐷','Trading $6 for $1 worth of stickers loses $5 AND wrecks the bear goal!'],w:['❌ Careful!','Stickers are only worth $1 but Jamie gives up $6 — that\'s a terrible trade!']},
+  'sp0-plan-fb1':{c:['✅ That\'s smart planning! 📋','Planning first means you cover what matters most and don\'t run out of money by accident!'],w:['❌ Not quite!','Planning isn\'t about buying more — it\'s about making sure your money covers needs and goals first!']},
+  'sp0-fb1': {c:['✅ Exactly — that\'s a trade-off! 🔄','Spending all on cards means no money for the snack. Every choice closes other doors.'],w:['❌ Think about it!','Tyler spent every dollar on cards. Now he has no money left for the snack he wants later!']},
+  'sp2-fb1': {c:['✅ Smart saver! 🎯','$3 saved = 30% closer to the $10 doll. Small savings add up big!'],w:['❌ Careful!','Cotton candy is good — but $3 is 30% of Aisha\'s doll goal! The doll will last much longer.']},
+  'lte0-fb1':{c:['✅ Right! 🧠','Learning to read well is investing in a skill that helps for LIFE — school, work, and everything!'],w:['❌ Actually...','Building skills like reading IS valuable — it helps in school and future jobs! That\'s human capital!']},
+  'lte2-fb1':{c:['✅ $6! 🐕','3 walks × $2 each = $6. Jordan earned real money by doing a job!'],w:['❌ Try multiplication!','3 walks × $2 each = $6. Multiply the number of jobs by the pay per job!']},
+  'gs0-fb1': {c:['✅ That\'s a real goal! 🎯','It has a what, a how much, AND a plan. Just wishing isn\'t a goal — planning is!'],w:['❌ Not quite!','A goal needs a specific plan. Just saying "I want a book someday" is a dream, not a goal!']},
+  'gs1-fb1': {c:['✅ 5 weeks! 🎉','$15 ÷ $3/week = 5 weeks. Ben reaches his goal!'],w:['❌ Try the math!','$15 ÷ $3 = 5. Think: 3 × 5 = 15!']},
+  'gs2-fb1': {c:['✅ Consistency wins! 💪','Saving the same amount every week is the habit that gets you there — every time!'],w:['❌ Think about it!','Irregular saving means you won\'t reach your goal on time. Consistency is the key!']},
+  'ss0-fb1': {c:['✅ Smart! Skip the impulse buy! 🐷','She didn\'t plan to buy it — that\'s an impulse. Save the $4 for something she really wants!'],w:['❌ Careful with impulse buys!','A $4 candy bar she didn\'t plan on is an impulse buy. Saying no builds great saving habits!']},
+  'ss1-fb1': {c:['✅ Exactly! Banks are safest! 🏦','Banks protect your money AND pay you interest for keeping it there. Win-win!'],w:['❌ Risky hiding spot!','Hiding money at home can be lost or stolen. Banks are safer AND pay you interest!']},
+  'ss2-fb1': {c:['✅ Both are great reasons! 🐷','Saving helps you reach goals AND gives you a cushion when surprises happen!'],w:['❌ Not quite!','Saving isn\'t about never spending — it\'s about being ready for goals AND surprises!']},
+  'bor0-fb1':{c:['✅ Borrowing — return it! 📖','Library books are borrowed — you use them and give them back. If it were a gift, she\'d keep it!'],w:['❌ Nope!','The library lets you borrow books — you must return them. Gifts are yours to keep forever!']},
+  'bor0-fb2':{c:['✅ Giving! 🎁','Priya gave the bear to keep forever — that\'s a gift! If she expected it back someday, it would be lending.'],w:['❌ Think about it!','Priya gave the bear away permanently. She doesn\'t expect it back — so it\'s a gift, not a loan!']},
+  'bor1-fb1':{c:['✅ A promise is a promise! 🤝','Even if the friend forgot, Sam borrowed the money. Paying back builds trust that lasts!'],w:['❌ That breaks trust!','Sam made a promise. Keeping it — even when no one\'s watching — is what makes you trustworthy!']},
+  'bor2-fb1':{c:['✅ Honesty is the best policy! 🌟','Telling the truth and offering to help makes things right — and keeps the friendship!'],w:['❌ Avoiding it makes it worse!','Saying nothing damages trust. Honesty — even when it\'s hard — is always the right move!']},
+  'bor2-fb2':{c:['✅ A gift! 🎁','Birthday money is given to keep — no payback needed. That\'s a gift, not a loan!'],w:['❌ Not this time!','Birthday money is a gift. Gifts don\'t need to be paid back — only borrowed money does!']},
+};
+
+// Needs vs Wants sorter data
+const SORT_ITEMS = [
+  {emoji:'🍎',label:'An apple to eat',      answer:'need'},
+  {emoji:'🎮',label:'A video game',          answer:'want'},
+  {emoji:'🏠',label:'A home to live in',     answer:'need'},
+  {emoji:'🍭',label:'A candy bar',           answer:'want'},
+  {emoji:'👕',label:'A shirt to wear',       answer:'need'},
+  {emoji:'🧸',label:'A stuffed animal',      answer:'want'},
+  {emoji:'💊',label:'Medicine when sick',    answer:'need'},
+  {emoji:'🎬',label:'A movie streaming app', answer:'want'},
+];
+
+// Jobs matching game
+const MATCH_JOBS = [
+  {job:'👩‍⚕️ Doctor',     duty:'Helps sick people feel better'},
+  {job:'🚒 Firefighter', duty:'Puts out fires and saves people'},
+  {job:'👨‍🏫 Teacher',   duty:'Helps children learn at school'},
+  {job:'🍕 Chef',        duty:'Cooks food in a restaurant'},
+  {job:'📬 Mail Carrier',duty:'Delivers letters and packages'},
+  {job:'🌳 Gardener',    duty:'Plants and cares for gardens'},
+];
+
+// ════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════
+let state = Object.assign({xp:0,completed:{},subsDone:{}}, (() => { try { return JSON.parse(localStorage.getItem(SAVE_KEY))||{}; } catch(e){return{};} })());
+function save() { try { localStorage.setItem(SAVE_KEY,JSON.stringify(state)); } catch(e){} }
+
+// ════════════════════════════════════════════
+// SIDEBAR
+// ════════════════════════════════════════════
+function openSidebar(){
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════
+function navTo(id) {
+  closeSidebar();
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const el = document.getElementById('view-' + id);
+  if (el) { el.classList.add('active'); window.scrollTo(0,0); }
+  // highlight sidebar
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navBtn = document.getElementById('nav-' + id);
+  if (navBtn) navBtn.classList.add('active');
+  // module-specific inits
+  if (id === 'k2-needs-wants') initSorter();
+  if (id === 'saving-up') initPiggy();
+  if (id === 'learn-to-earn') initMatchGame();
+  if (id === 'dash') buildDash();
+}
+
+function startApp() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-app').classList.add('active');
+  buildDash();
+  updateXP();
+  navTo('dash');
+}
+
+// ════════════════════════════════════════════
+// DASHBOARD
+// ════════════════════════════════════════════
+function buildDash() {
+  const grid = document.getElementById('module-grid');
+  grid.innerHTML = MODULES.map(m => {
+    const done = !!state.completed[m.id];
+    const subsDone = (state.subsDone[m.id] || []).length;
+    const pct = done ? 100 : Math.round((subsDone / m.subs) * 100);
+    return `<div class="mod-card ${done?'done':''}" onclick="navTo('${m.id}')">
+      <div class="mod-icon">${m.icon}</div>
+      <div class="mod-info">
+        <div class="mod-name">${m.name}</div>
+        <div class="mod-desc">${m.desc}</div>
+        <div class="mod-subs">${m.subs} lessons · ${m.xp} ⭐</div>
+      </div>
+      <div class="mod-status">
+        <div class="mod-pct">${pct}%</div>
+        <div class="mod-bar"><div class="mod-bar-fill" style="width:${pct}%"></div></div>
+        ${done ? '<div style="font-size:24px;">✅</div>' : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  const bg = document.getElementById('badges-grid');
+  bg.innerHTML = BADGES.map(b => `<div class="badge ${state.completed[b.id]?'earned':'locked'}" title="${b.name}">${b.icon}</div>`).join('');
+
+  const done = Object.keys(state.completed).length;
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-xp').textContent = state.xp;
+  document.getElementById('stat-badges').textContent = done;
+
+  if (done === 0) { document.getElementById('dash-greeting').textContent = 'Hey there, Money Explorer! 👋'; document.getElementById('dash-sub').textContent = 'Pick your first lesson to start learning! 🌟'; }
+  else if (done === MODULES.length) { document.getElementById('dash-greeting').textContent = 'You did it! 🏆'; document.getElementById('dash-sub').textContent = 'You completed every lesson! You\'re a FINdamentals Master!'; }
+  else { document.getElementById('dash-greeting').textContent = `Great work — ${done} done! 🎉`; document.getElementById('dash-sub').textContent = `Keep going — you're amazing! ⭐`; }
+
+  // Sidebar badges
+  const sb = document.getElementById('sb-badges');
+  if (sb) sb.innerHTML = BADGES.map(b => `<div class="sb-badge ${state.completed[b.id]?'earned':'locked'}" title="${b.name}">${b.icon}</div>`).join('');
+
+  // Sidebar nav done marks
+  MODULES.forEach(m => {
+    const chk = document.getElementById('chk-' + m.id);
+    if (chk) chk.textContent = state.completed[m.id] ? '✅' : '';
+    const nb = document.getElementById('nav-' + m.id);
+    if (nb) { nb.classList.toggle('done', !!state.completed[m.id]); }
+  });
+}
+
+function updateXP() {
+  const pct = Math.min(100,(state.xp/TOTAL_XP)*100);
+  ['top-xp-fill','sb-xp-fill'].forEach(id => { const el = document.getElementById(id); if(el) el.style.width = pct+'%'; });
+  ['top-xp-lbl','sb-xp-lbl'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = state.xp+' / '+TOTAL_XP; });
+  const lvl = Math.floor(state.xp/30);
+  const lvlEl = document.getElementById('top-level');
+  if (lvlEl) lvlEl.textContent = LEVELS[Math.min(lvl,LEVELS.length-1)];
+}
+
+// ════════════════════════════════════════════
+// SUBSECTIONS
+// ════════════════════════════════════════════
+function goSub(mod, idx) {
+  const m = {wim:'what-is-money',nw:'k2-needs-wants',su:'saving-up',sp:'k2-spending',lte:'learn-to-earn',gs:'k2-goal-setting',ss:'super-savers',bor:'k2-borrowing'}[mod];
+  const total = MODULES.find(x=>x.id===m)?.subs || 3;
+  for (let i = 0; i < total; i++) {
+    const s = document.getElementById('sub-' + mod + '-' + i);
+    if (s) s.style.display = i === idx ? 'block' : 'none';
+    const t = document.getElementById('stab-' + mod + '-' + i);
+    if (t) { t.classList.toggle('active', i === idx); }
+  }
+  window.scrollTo(0,0);
+  // init sorter if opening needs/wants sub 1
+  if (mod==='nw' && idx===1) initSorter();
+  if (mod==='lte' && idx===1) initMatchGame();
+}
+
+function markSub(mod, idx) {
+  const m = {wim:'what-is-money',nw:'k2-needs-wants',su:'saving-up',sp:'k2-spending',lte:'learn-to-earn',gs:'k2-goal-setting',ss:'super-savers',bor:'k2-borrowing'}[mod];
+  if (!state.subsDone[m]) state.subsDone[m] = [];
+  if (!state.subsDone[m].includes(idx)) state.subsDone[m].push(idx);
+  save();
+  const tab = document.getElementById('stab-' + mod + '-' + idx);
+  if (tab) { tab.classList.add('done'); const chk = tab.querySelector('.sub-tab-check'); if (chk) chk.textContent = '✅'; }
+}
+
+// ════════════════════════════════════════════
+// MODULE COMPLETE
+// ════════════════════════════════════════════
+function completeModule(id) {
+  const view = document.getElementById('view-' + id);
+  const compEl = document.getElementById('complete-' + id);
+  if (!compEl) return;
+  // hide all subsections
+  if (view) view.querySelectorAll('[id^="sub-"]').forEach(s => s.style.display='none');
+  const tabs = view ? view.querySelector('[id^="tabs-"]') : null;
+  if (tabs) tabs.style.display = 'none';
+  compEl.style.display = 'block';
+  window.scrollTo(0,0);
+  if (!state.completed[id]) {
+    const mod = MODULES.find(m => m.id === id);
+    state.xp += mod ? mod.xp : 30;
+    state.completed[id] = true;
+    save();
+    updateXP();
+    buildDash();
+  }
+}
+
+// ════════════════════════════════════════════
+// CHOICE HANDLER
+// ════════════════════════════════════════════
+function pick(btn, type, fbId, doAnimatePiggy) {
+  const group = btn.closest('.choices');
+  group.querySelectorAll('.choice').forEach(b => b.style.pointerEvents='none');
+  btn.classList.add(type);
+  if (type==='wrong') group.querySelectorAll('.choice').forEach(b => { if(!b.classList.contains('wrong')) b.classList.add('reveal'); });
+  const fb = document.getElementById(fbId);
+  if (!fb) return;
+  const msgs = FEEDBACK[fbId];
+  if (msgs) { const pair = type==='correct' ? msgs.c : msgs.w; fb.innerHTML = `<div class="fb-title">${pair[0]}</div><div>${pair[1]}</div>`; }
+  fb.className = 'feedback ' + (type==='correct'?'correct':'wrong');
+  fb.style.display = 'block';
+  if (doAnimatePiggy && type==='correct') animatePiggy();
+}
+
+// ════════════════════════════════════════════
+// PIGGY BANK
+// ════════════════════════════════════════════
+function initPiggy() {
+  const c = document.getElementById('piggy-coins'); if (!c) return;
+  c.innerHTML = '';
+  for (let i=1;i<=5;i++) c.innerHTML += `<div class="piggy-coin" id="pc-${i}">🪙</div>`;
+  const bar = document.getElementById('piggy-bar'); if (bar) bar.style.width='0%';
+  const lbl = document.getElementById('piggy-saved'); if (lbl) lbl.textContent='$0 saved';
+}
+function animatePiggy() {
+  for (let i=1;i<=5;i++) {
+    setTimeout(() => {
+      const coin = document.getElementById('pc-'+i); if(coin) coin.classList.add('filled');
+      const bar = document.getElementById('piggy-bar'); if(bar) bar.style.width=(i*20)+'%';
+      const lbl = document.getElementById('piggy-saved'); if(lbl) lbl.textContent='$'+(i*2)+' saved';
+    }, i*350);
+  }
+}
+
+// ════════════════════════════════════════════
+// NEEDS/WANTS SORTER
+// ════════════════════════════════════════════
+let sortScore=0,sortAnswered=0;
+function initSorter() {
+  sortScore=0; sortAnswered=0;
+  const c = document.getElementById('k2nw-sorter'); if (!c) return;
+  c.innerHTML = SORT_ITEMS.map((it,i) => `
+    <div class="sort-item">
+      <span class="sort-emoji">${it.emoji}</span>
+      <span class="sort-label">${it.label}</span>
+      <div class="sort-btns">
+        <button class="sort-btn sort-need" id="sn-${i}" onclick="answerSort(${i},'need','${it.answer}')">Need</button>
+        <button class="sort-btn sort-want" id="sw-${i}" onclick="answerSort(${i},'want','${it.answer}')">Want</button>
+      </div>
+    </div>`).join('');
+  const fb = document.getElementById('k2nw-fb'); if(fb) fb.style.display='none';
+  const db = document.getElementById('k2nw-done-btn'); if(db) db.style.display='none';
+}
+function answerSort(idx, chosen, correct) {
+  const nb = document.getElementById('sn-'+idx), wb = document.getElementById('sw-'+idx);
+  if (!nb || nb.disabled) return;
+  nb.disabled=true; wb.disabled=true;
+  const ok = chosen === correct;
+  const picked = chosen==='need' ? nb : wb;
+  picked.classList.add(ok?'correct-pick':'wrong-pick');
+  if (ok) sortScore++;
+  sortAnswered++;
+  if (sortAnswered >= SORT_ITEMS.length) {
+    const fb = document.getElementById('k2nw-fb');
+    const db = document.getElementById('k2nw-done-btn');
+    if (fb) {
+      fb.className = 'feedback ' + (sortScore>=6?'correct':'wrong');
+      fb.style.display = 'block';
+      fb.innerHTML = `<div class="fb-title">${sortScore>=6?'🎉 Amazing!':'👍 Good try!'}</div><div>You got <strong>${sortScore} out of ${SORT_ITEMS.length}</strong> correct! ${sortScore>=6?'You really know your needs from wants! 🌟':'Review the highlighted ones — needs are things you must have to stay safe and healthy!'}</div>`;
+    }
+    if (db) db.style.display='block';
+  }
+}
+
+// ════════════════════════════════════════════
+// JOBS MATCH GAME
+// ════════════════════════════════════════════
+let matchSel = null, matchDone = [];
+function initMatchGame() {
+  matchSel = null; matchDone = [];
+  const c = document.getElementById('match-game-lte'); if (!c) return;
+  const shuffledDuties = [...MATCH_JOBS].sort(()=>Math.random()-0.5);
+  c.innerHTML = `
+    <div class="match-grid">
+      <div>
+        <div class="match-col-label">👷 Workers</div>
+        ${MATCH_JOBS.map((j,i) => `<div class="match-card" id="mj-${i}" data-job="${i}" onclick="matchPick('job',${i})">${j.job}</div>`).join('')}
+      </div>
+      <div>
+        <div class="match-col-label">📋 What They Do</div>
+        ${shuffledDuties.map((j,i) => `<div class="match-card" id="md-${i}" data-duty="${MATCH_JOBS.indexOf(j)}" onclick="matchPick('duty',${i},'${MATCH_JOBS.indexOf(j)}')">${j.duty}</div>`).join('')}
+      </div>
+    </div>`;
+}
+function matchPick(type, idx, origIdx) {
+  if (type === 'job') {
+    const card = document.getElementById('mj-'+idx);
+    if (!card || card.classList.contains('matched')) return;
+    document.querySelectorAll('[id^="mj-"]').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    matchSel = {type:'job', idx};
+  } else {
+    if (!matchSel) return;
+    const dutyCard = document.getElementById('md-'+idx);
+    const jobCard  = document.getElementById('mj-'+matchSel.idx);
+    if (matchSel.idx === parseInt(origIdx)) {
+      dutyCard.classList.add('matched'); jobCard.classList.add('matched');
+      matchDone.push(matchSel.idx); matchSel = null;
+      if (matchDone.length === MATCH_JOBS.length) {
+        const fb = document.getElementById('lte1-match-fb');
+        if (fb) { fb.className='feedback correct'; fb.style.display='block'; fb.innerHTML='<div class="fb-title">🎉 All Matched!</div><div>You know what every worker in your town does! That\'s so impressive! 🌟</div>'; }
+        const done = document.getElementById('lte1-match-done');
+        if (done) done.style.display = 'block';
+      }
+    } else {
+      dutyCard.classList.add('wrong-flash'); jobCard.classList.add('wrong-flash');
+      setTimeout(()=>{ dutyCard.classList.remove('wrong-flash','selected'); jobCard.classList.remove('wrong-flash','selected'); matchSel=null; },500);
+    }
+  }
+}
+
+// ════════════════════════════════════════════
+// STORE GAME
+// ════════════════════════════════════════════
+function toggleItem(el) {
+  const price = parseFloat(el.dataset.price);
+  if (el.classList.contains('picked')) { el.classList.remove('picked'); }
+  else {
+    let total = 0;
+    document.querySelectorAll('.store-item.picked').forEach(i => total += parseFloat(i.dataset.price));
+    if (total + price > 5.001) {
+      el.classList.add('cant'); setTimeout(()=>el.classList.remove('cant'),400);
+      const st = document.getElementById('store-status');
+      if (st) { st.textContent='⚠️ Not enough money!'; st.style.color='var(--red)'; }
+      setTimeout(()=>{ const st2=document.getElementById('store-status'); if(st2){st2.textContent='Pick what you can afford!';st2.style.color='var(--text3)';} },1500);
+      return;
+    }
+    el.classList.add('picked');
+  }
+  let total = 0;
+  document.querySelectorAll('.store-item.picked').forEach(i => total += parseFloat(i.dataset.price));
+  const rem = 5.00 - total;
+  const remEl = document.getElementById('store-remaining'); if(remEl) remEl.textContent='$'+rem.toFixed(2);
+  const st = document.getElementById('store-status');
+  if (st) { if(rem<0.01&&total>0){st.textContent='✅ Perfectly spent!';st.style.color='var(--green)';}else{st.textContent='$'+rem.toFixed(2)+' still to spend';st.style.color='var(--text3)';} }
+}
+
+// ════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════
+(function init() {
+  if (state.xp > 0 || Object.keys(state.completed).length > 0) {
+    const wrap = document.getElementById('continue-wrap'); if(wrap) wrap.style.display='block';
+    const info = document.getElementById('continue-info');
+    if (info) { const done=Object.keys(state.completed).length; info.textContent=`${done} lesson${done!==1?'s':''} completed · ${state.xp} ⭐ Stars`; }
+  }
+})();
+</script>
+</body>
+</html>
